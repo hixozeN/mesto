@@ -1,0 +1,25 @@
+.head-profile__edit-button {
+  min-width: 24px;
+  background-image: url(../../../images/edit-username.svg);
+  background-size: cover;
+  background-position: center;
+  background-color: #000;
+	margin-left: 18px;
+  padding: 0;
+  height: 24px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s linear;
+}
+
+.head-profile__edit-button:hover {
+  opacity: 0.5;
+}
+
+@media screen and (max-width: 720px) {
+  .head-profile__edit-button {
+    margin-left: 10px;
+    min-width: 18px;
+    height: 18px;
+  }
+}

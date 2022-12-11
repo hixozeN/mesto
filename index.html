@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./vendor/normalize.css">
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Mesto</title>
+</head>
+
+<body class="root">
+
+  <header class="header">
+    <div class="header__logo"></div>
+  </header>
+
+  <main class="page">
+
+    <section class="head-profile">
+      <div class="head-profile__user-section">
+        <img class="head-profile__avatar" src="./images/avatar.jpg" alt="Аватар пользователя $s">
+        <div class="head-profile__userinfo">
+          <div class="head-profile__username-and-edit">
+            <h1 class="head-profile__username">
+              Жак-Ив Кусто
+            </h1>
+            <button class="head-profile__edit-button"></button>
+          </div>
+          <p class="head-profile__job">Исследователь океана</p>
+        </div>
+      </div>
+      <button class="head-profile__add-button"></button>
+    </section>
+
+    <section class="photo-feed">
+      <div class="card">
+        <img class="card__image" src="./images/card1.jpg" alt="">
+        <div class="card__heading">
+          <h2 class="card__title">Карачаевск</h2>
+          <div class="card__like-section">
+            <button class="card__like-button"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <img class="card__image" src="./images/card2.jpg" alt="">
+        <div class="card__heading">
+          <h2 class="card__title">Card #2</h2>
+          <div class="card__like-section">
+            <button class="card__like-button"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <img class="card__image" src="./images/card3.jpg" alt="">
+        <div class="card__heading">
+          <h2 class="card__title">Card #3</h2>
+          <div class="card__like-section">
+            <button class="card__like-button"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <img class="card__image" src="./images/card4.jpg" alt="">
+        <div class="card__heading">
+          <h2 class="card__title">Card #4</h2>
+          <div class="card__like-section">
+            <button class="card__like-button"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <img class="card__image" src="./images/card5.jpg" alt="">
+        <div class="card__heading">
+          <h2 class="card__title">Card #5</h2>
+          <div class="card__like-section">
+            <button class="card__like-button"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <img class="card__image" src="./images/card6.jpg" alt="">
+        <div class="card__heading">
+          <h2 class="card__title">Карачаево-Черкесск</h2>
+          <div class="card__like-section">
+            <button class="card__like-button"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__author">© 2022 Mesto Russia</p>
+  </footer>
+
+  <div class="popup">
+    <div class="popup__content">
+      <form class="popup__form">
+        <button type="button" class="popup__close-button"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <fieldset class="popup__input-container">
+          <input class="popup__input popup__input_field_name" type="text" placeholder="Как Вас зовут?" name="username"
+            id="username" value="Жак-Ив Кусто">
+          <input class="popup__input popup__input_field_job" type="text" placeholder="Кем Вы работаете?" name="userjob"
+            id="userjob" value="Исследователь океана">
+        </fieldset>
+        <button class="popup__save-button" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  </div>
+  <script src="./script.js"></script>
+</body>
+
+</html>
