@@ -3,12 +3,22 @@ let popup = document.querySelector('.popup');
 let openEditFormButton = document.querySelector('.head-profile__edit-button');
 let closeEditFormButton = document.querySelector('.popup__close-button');
 
+function popupOpen() {
+  return popup.classList.add('popup_opened');
+}
+
+function popupClose() {
+  return popup.classList.remove('popup_opened');
+}
+
 openEditFormButton.addEventListener('click', (e) => {
-  popup.classList.add('popup_opened');
+  //popup.classList.add('popup_opened');
+  popupOpen();
 });
 
 closeEditFormButton.addEventListener('click', (e) => {
-  popup.classList.remove('popup_opened');
+  //popup.classList.remove('popup_opened');
+  popupClose();
 });
 
 //
