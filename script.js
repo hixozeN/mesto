@@ -8,25 +8,22 @@ let jobInput = document.querySelector('.popup__input_field_job');
 let userNameText = document.querySelector('.head-profile__username');
 let userJobText = document.querySelector('.head-profile__job');
 
-function controlPopup() {
-  return popup.classList.toggle('popup_opened');
-}
-
 function refreshInputValues() {
   nameInput.value = userNameText.textContent;
   jobInput.value = userJobText.textContent;
   return;
 }
 
-openEditFormButton.addEventListener('click', (e) => {
-  controlPopup();
-  refreshInputValues();
-});
+function controlPopup(open, close) {
+  open.addEventListener('click', (e) => {
+    popup.classList.add('popup_opened');
+    refreshInputValues();
+  });
 
-closeEditFormButton.addEventListener('click', (e) => {
-  controlPopup();
-});
-
+  close.addEventListener('click', (e) => {
+    popup.classList.remove('popup_opened');
+  });
+}
 
 function formSubmitHandler(evt) {
   evt.preventDefault();
@@ -51,3 +48,5 @@ formElement.addEventListener('keydown', function (event) {
     popup.classList.remove('popup_opened'); // Закрываем окно после отправки
   }
 });
+
+controlPopup(openEditFormButton, closeEditFormButton);
