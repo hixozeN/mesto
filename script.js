@@ -2,52 +2,39 @@
 let popup = document.querySelector('.popup');
 let openEditFormButton = document.querySelector('.head-profile__edit-button');
 let closeEditFormButton = document.querySelector('.popup__close-button');
+let formElement = document.querySelector(".popup__form");
+let nameInput = document.querySelector('.popup__input_field_name');
+let jobInput = document.querySelector('.popup__input_field_job');
+let userNameText = document.querySelector('.head-profile__username');
+let userJobText = document.querySelector('.head-profile__job');
 
-function popupOpen() {
-  return popup.classList.add('popup_opened');
+function controlPopup() {
+  return popup.classList.toggle('popup_opened');
 }
 
-function popupClose() {
-  return popup.classList.remove('popup_opened');
+function refreshInputValues() {
+  nameInput.value = userNameText.textContent;
+  jobInput.value = userJobText.textContent;
+  return;
 }
 
 openEditFormButton.addEventListener('click', (e) => {
-  //popup.classList.add('popup_opened');
-  popupOpen();
+  controlPopup();
+  refreshInputValues();
 });
 
 closeEditFormButton.addEventListener('click', (e) => {
-  //popup.classList.remove('popup_opened');
-  popupClose();
+  controlPopup();
 });
 
-//
-//  Скрипт смены данных в user-section
-//
-// Находим форму в DOM
-let formElement = document.querySelector(".popup__form");
 
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
 function formSubmitHandler(evt) {
-  evt.preventDefault(); // Отменяем стандартную форму отправки
-  popup.classList.remove('popup_opened'); // И закрываем окно после отправки формы по клику
+  evt.preventDefault();
 
-  // Находим поля формы в DOM
-  let nameInput = document.querySelector('.popup__input_field_name');
-  let userJobInput = document.querySelector('.popup__input_field_job');
+  userNameText.textContent = nameInput.value;
+  userJobText.textContent = jobInput.value;
 
-  // Получаем значение полей из свойства value
-  let nameValue = nameInput.value;
-  let userJobValue = userJobInput.value;
-
-  // Выбераем элементы, куда должны быть вставлены значения полей
-  let usernameChange = document.querySelector('.head-profile__username');
-  let userJobChange = document.querySelector('.head-profile__job');
-
-  // Вставляем новые значения с помощью textContent
-  usernameChange.textContent = nameValue;
-  userJobChange.textContent = userJobValue;
+  popup.classList.remove('popup_opened');
 }
 
 // Прикрепляем обработчик к форме:
