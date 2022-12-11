@@ -1,5 +1,5 @@
 .head-profile__user-section {
-	display: flex;
+  display: flex;
 }
 
 @media screen and (max-width: 720px) {
