@@ -8,11 +8,10 @@
   height: 19px;
   border: none;
   cursor: pointer;
-  transition: all 0.3s linear;
+  transition: opacity 0.3s linear;
   padding: 0;
 }
 
 .card__like-button:hover {
   opacity: 0.5;
-  transform: scale(1.3);
 }

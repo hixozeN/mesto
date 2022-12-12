@@ -22,74 +22,62 @@
         <div class="head-profile__userinfo">
           <div class="head-profile__username-and-edit">
             <h1 class="head-profile__username">Жак-Ив Кусто</h1>
-            <button class="head-profile__edit-button"></button>
+            <button class="head-profile__edit-button" type="button" aria-label="Редактировать имя и деятельность"></button>
           </div>
           <p class="head-profile__job">Исследователь океана</p>
         </div>
       </div>
-      <button class="head-profile__add-button"></button>
+      <button class="head-profile__add-button" type="button" aria-label="Добавить фото в ленту"></button>
     </section>
 
     <section class="photo-feed">
-      <div class="card">
+      <article class="card">
         <img class="card__image" src="./images/card1.jpg" alt="Компьютерный стол с двумя мониторами, мышкой и клавиатурой в приглушенном свете">
         <div class="card__heading">
           <h2 class="card__title">Рабочее место</h2>
-          <div class="card__like-section">
-            <button class="card__like-button"></button>
-          </div>
+          <button class="card__like-button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="card">
+      <article class="card">
         <img class="card__image" src="./images/card2.jpg" alt="Слесарь в автосервисе пилит металл болгаркой с кучей искр">
         <div class="card__heading">
           <h2 class="card__title">Рефакторинг</h2>
-          <div class="card__like-section">
-            <button class="card__like-button"></button>
-          </div>
+          <button class="card__like-button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="card">
+      <article class="card">
         <img class="card__image" src="./images/card3.jpg" alt="Зимний дом с множеством светящихся новогодних украшений">
         <div class="card__heading">
           <h2 class="card__title">Праздник к нам приходит</h2>
-          <div class="card__like-section">
-            <button class="card__like-button"></button>
-          </div>
+          <button class="card__like-button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="card">
+      <article class="card">
         <img class="card__image" src="./images/card4.jpg" alt="Два джойстика игровой приставки в руках людей на фоне телевизора">
         <div class="card__heading">
           <h2 class="card__title">Прокрастинация</h2>
-          <div class="card__like-section">
-            <button class="card__like-button"></button>
-          </div>
+          <button class="card__like-button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="card">
+      <article class="card">
         <img class="card__image" src="./images/card5.jpg" alt="Сочная пицца на деревянной доске">
         <div class="card__heading">
           <h2 class="card__title">Ночной дожор</h2>
-          <div class="card__like-section">
-            <button class="card__like-button"></button>
-          </div>
+          <button class="card__like-button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
 
-      <div class="card">
+      <article class="card">
         <img class="card__image" src="./images/card6.jpg" alt="Мужчина, идущий в глубь леса по деревянной тропе">
         <div class="card__heading">
           <h2 class="card__title">Вечерняя прогулка</h2>
-          <div class="card__like-section">
-            <button class="card__like-button"></button>
-          </div>
+          <button class="card__like-button" type="button" aria-label="Нравится"></button>
         </div>
-      </div>
+      </article>
     </section>
   </main>
 
@@ -99,14 +87,14 @@
 
   <div class="popup">
     <div class="popup__content">
-      <form class="popup__form">
-        <button type="button" name="button_form_close" id="button_form_close" class="popup__close-button"></button>
+      <form class="popup__form" name="formEditProfile">
+        <button type="button" name="button_form_close" id="button_form_close" class="popup__close-button" aria-label="Закрыть форму редактирования"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <fieldset class="popup__input-container">
           <input class="popup__input popup__input_field_name" type="text" placeholder="Как Вас зовут?" name="username"
-            id="username" value='Жак-Ив Кусто'>
+            id="username">
           <input class="popup__input popup__input_field_job" type="text" placeholder="Кем Вы работаете?" name="userjob"
-            id="userjob" value="Исследователь океана">
+            id="userjob">
         </fieldset>
         <button class="popup__save-button" name="button_editForm_save" id="button_editForm_save"
           type="submit">Сохранить</button>
