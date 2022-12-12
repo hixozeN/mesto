@@ -2,11 +2,11 @@
   max-width: 500px;
   display: flex;
   align-items: baseline;
-  justify-content: center;
 }
 
 @media screen and (max-width: 720px) {
   .head-profile__username-and-edit {
     align-items: center;
+    justify-content: center;
   }
 }
