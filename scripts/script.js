@@ -16,9 +16,14 @@ function refreshInputValues() {
 }
 
 // This function will control the popups by toggle popup_opened class
+// and refresh inputs' value, when popup opens
 function controlPopup() {
-  popup.classList.toggle('popup_opened');
-  refreshInputValues();
+  if (popup.classList.contains('popup_opened')) {
+    popup.classList.remove('popup_opened');
+  } else {
+    popup.classList.add('popup_opened');
+    refreshInputValues();
+  }
 }
 
 // Listeners for buttons
