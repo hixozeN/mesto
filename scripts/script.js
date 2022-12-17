@@ -6,10 +6,10 @@ const popupAdd = document.querySelector('.popup_add');
 const buttonOpenEditForm = document.querySelector('.head-profile__edit-button');
 const buttonAdd = document.querySelector('.head-profile__add-button');
 const buttonClose = document.querySelectorAll('.popup__close-button');
-const buttonLike = document.querySelectorAll('.card__like-button');
 
 // #Constants
 const formElement = document.querySelector('.popup__form');
+const cardsContainer = document.querySelector('.photo-feed');
 // Cards at photo-feed
 const initialCards = [
   {
@@ -43,8 +43,6 @@ let nameInput = document.querySelector('.popup__input_field_name');
 let jobInput = document.querySelector('.popup__input_field_job');
 let userNameText = document.querySelector('.head-profile__username');
 let userJobText = document.querySelector('.head-profile__job');
-let cardTitle = document.querySelectorAll('.card__title');
-let cardImage = document.querySelectorAll('.card__image');
 
 // #Functions
 /* This function will control the popups by toggle popup_opened class
@@ -65,16 +63,16 @@ function formSubmitHandler(evt) {
   controlPopup(evt.target);
 }
 
-function cardPreload() {
-  let cardContainer = document.querySelector('.photo-feed');
+function cardsPreload() {
   for (let i = 0; i < initialCards.length; i++) {
-    cardContainer.insertAdjacentHTML('beforeend', `<article class="card">
-  <img class="card__image" src="${initialCards[i].link}" alt="Компьютерный стол с двумя мониторами, мышкой и клавиатурой в приглушенном свете">
-  <div class="card__heading">
-    <h2 class="card__title">${initialCards[i].name}</h2>
-    <button class="card__like-button" type="button" aria-label="Нравится"></button>
-  </div>
-</article>`);
+    cardsContainer.insertAdjacentHTML('beforeend',
+      `<article class="card">
+      <img class="card__image" src="${initialCards[i].link}" alt="${initialCards[i].name}">
+      <div class="card__heading">
+        <h2 class="card__title">${initialCards[i].name}</h2>
+        <button class="card__like-button" type="button" aria-label="Нравится"></button>
+      </div>
+    </article>`);
   };
 };
 
@@ -93,9 +91,12 @@ buttonClose.forEach(function (button) {
 });
 
 // Like button listener
-buttonLike.forEach(function (button) {
-  button.addEventListener('click', () => {
-    button.classList.toggle('card__like-button_active');
+document.addEventListener('DOMContentLoaded', function () {
+  const buttonLike = document.querySelectorAll('.card__like-button');
+  buttonLike.forEach(function (button) {
+    button.addEventListener('click', () => {
+      button.classList.toggle('card__like-button_active');
+    });
   });
 });
 
@@ -103,4 +104,4 @@ buttonLike.forEach(function (button) {
 formElement.addEventListener('submit', formSubmitHandler);
 
 // Preload cards at photo-feed section from initialCards[]
-cardPreload();
+cardsPreload();
