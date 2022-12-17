@@ -1,42 +1,61 @@
-// #Popup
-const popup = document.querySelector('.popup');
+// #Popups
+const popupEdit = document.querySelector('.popup_edit');
+const popupAdd = document.querySelector('.popup_add');
+
+// #Buttons
 const buttonOpenEditForm = document.querySelector('.head-profile__edit-button');
-const buttonCloseEditForm = document.querySelector('.popup__close-button');
+const buttonAdd = document.querySelector('.head-profile__add-button');
+const buttonClose = document.querySelectorAll('.popup__close-button');
+const buttonLike = document.querySelectorAll('.card__like-button');
+
+// #Constants
 const formElement = document.querySelector(".popup__form");
+
+// #Variables
 let nameInput = document.querySelector('.popup__input_field_name');
 let jobInput = document.querySelector('.popup__input_field_job');
 let userNameText = document.querySelector('.head-profile__username');
 let userJobText = document.querySelector('.head-profile__job');
 
-/*  Function which will refresh actual input values from username and userjob titles
-    when user will toggle popup */
-function refreshInputValues() {
-  nameInput.value = userNameText.textContent;
-  jobInput.value = userJobText.textContent;
-}
-
-// This function will control the popups by toggle popup_opened class
-// and refresh inputs' value, when popup opens
-function controlPopup() {
-  if (popup.classList.contains('popup_opened')) {
-    popup.classList.remove('popup_opened');
+// #Functions
+/* This function will control the popups by toggle popup_opened class
+   and refresh inputs' value, when popup opens */
+function controlPopup(option) {
+  if (option.closest('.popup').classList.contains('popup_opened')) {
+    option.closest('.popup').classList.remove('popup_opened');
   } else {
-    popup.classList.add('popup_opened');
-    refreshInputValues();
+    option.classList.add('popup_opened');
   }
 }
 
-// Listeners for buttons
-buttonOpenEditForm.addEventListener('click', controlPopup);
-buttonCloseEditForm.addEventListener('click', controlPopup);
-
-// Function that handles the form submission
+// Function that handles the edit form submission
 function formSubmitHandler(evt) {
   evt.preventDefault();
   userNameText.textContent = nameInput.value;
   userJobText.textContent = jobInput.value;
-  controlPopup();
+  controlPopup(evt.target);
 }
+
+// #Listeners
+// Listeners for form buttons
+buttonOpenEditForm.addEventListener('click', () => {
+  controlPopup(popupEdit);
+  nameInput.value = userNameText.textContent;
+  jobInput.value = userJobText.textContent;
+});
+buttonAdd.addEventListener('click', () => controlPopup(popupAdd));
+
+// Listener for each button which closes popup
+buttonClose.forEach(function(button) {
+  button.addEventListener('click', () => controlPopup(button));
+});
+
+// Like button listener
+buttonLike.forEach(function(button) {
+  button.addEventListener('click', () => {
+    button.classList.toggle('card__like-button_active');
+  });
+});
 
 // Listener for a sumbit event
 formElement.addEventListener('submit', formSubmitHandler);

@@ -3,9 +3,9 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-color: transparent;
-  background-position: center;
-  width: 22px;
-  height: 19px;
+  background-position: center center;
+  min-width: 22px;
+  min-height: 19px;
   border: none;
   cursor: pointer;
   transition: opacity 0.3s linear;

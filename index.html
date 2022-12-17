@@ -85,10 +85,10 @@
     <p class="footer__author">© 2022 Mesto Russia</p>
   </footer>
 
-  <div class="popup">
+  <div class="popup popup_edit">
     <div class="popup__content">
+      <button type="button" name="button_form_close" id="button_form_close" class="popup__close-button" aria-label="Закрыть форму редактирования"></button>
       <form class="popup__form" name="formEditProfile">
-        <button type="button" name="button_form_close" id="button_form_close" class="popup__close-button" aria-label="Закрыть форму редактирования"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <fieldset class="popup__input-container">
           <input class="popup__input popup__input_field_name" type="text" placeholder="Как Вас зовут?" name="username"
@@ -98,6 +98,23 @@
         </fieldset>
         <button class="popup__save-button" name="button_editForm_save" id="button_editForm_save"
           type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup popup_add">
+    <div class="popup__content">
+      <button type="button" name="button_form_close" id="button_form_close" class="popup__close-button" aria-label="Закрыть форму редактирования"></button>
+      <form class="popup__form" name="formEditProfile">
+        <h2 class="popup__title">Добавить фото</h2>
+        <fieldset class="popup__input-container">
+          <input class="popup__input popup__input_field_placename" type="text" placeholder="Название" name="placename"
+            id="placename">
+          <input class="popup__input popup__input_field_placeurl" type="text" placeholder="Ссылка на картинку" name="placeurl"
+            id="placeurl">
+        </fieldset>
+        <button class="popup__add-button" name="button_placeForm_add" id="button_placeForm_add"
+          type="submit">Создать</button>
       </form>
     </div>
   </div>
