@@ -9,13 +9,42 @@ const buttonClose = document.querySelectorAll('.popup__close-button');
 const buttonLike = document.querySelectorAll('.card__like-button');
 
 // #Constants
-const formElement = document.querySelector(".popup__form");
+const formElement = document.querySelector('.popup__form');
+// Cards at photo-feed
+const initialCards = [
+  {
+    name: 'Рабочее место',
+    link: './images/card1.jpg'
+  },
+  {
+    name: 'Рефакторинг',
+    link: './images/card2.jpg'
+  },
+  {
+    name: 'Праздник к нам приходит',
+    link: './images/card3.jpg'
+  },
+  {
+    name: 'Прокрастинация',
+    link: './images/card4.jpg'
+  },
+  {
+    name: 'Ночной дожор',
+    link: './images/card5.jpg'
+  },
+  {
+    name: 'Вечерняя прогулка',
+    link: './images/card6.jpg'
+  }
+];
 
 // #Variables
 let nameInput = document.querySelector('.popup__input_field_name');
 let jobInput = document.querySelector('.popup__input_field_job');
 let userNameText = document.querySelector('.head-profile__username');
 let userJobText = document.querySelector('.head-profile__job');
+let cardTitle = document.querySelectorAll('.card__title');
+let cardImage = document.querySelectorAll('.card__image');
 
 // #Functions
 /* This function will control the popups by toggle popup_opened class
@@ -36,6 +65,19 @@ function formSubmitHandler(evt) {
   controlPopup(evt.target);
 }
 
+function cardPreload() {
+  let cardContainer = document.querySelector('.photo-feed');
+  for (let i = 0; i < initialCards.length; i++) {
+    cardContainer.insertAdjacentHTML('beforeend', `<article class="card">
+  <img class="card__image" src="${initialCards[i].link}" alt="Компьютерный стол с двумя мониторами, мышкой и клавиатурой в приглушенном свете">
+  <div class="card__heading">
+    <h2 class="card__title">${initialCards[i].name}</h2>
+    <button class="card__like-button" type="button" aria-label="Нравится"></button>
+  </div>
+</article>`);
+  };
+};
+
 // #Listeners
 // Listeners for form buttons
 buttonOpenEditForm.addEventListener('click', () => {
@@ -46,12 +88,12 @@ buttonOpenEditForm.addEventListener('click', () => {
 buttonAdd.addEventListener('click', () => controlPopup(popupAdd));
 
 // Listener for each button which closes popup
-buttonClose.forEach(function(button) {
+buttonClose.forEach(function (button) {
   button.addEventListener('click', () => controlPopup(button));
 });
 
 // Like button listener
-buttonLike.forEach(function(button) {
+buttonLike.forEach(function (button) {
   button.addEventListener('click', () => {
     button.classList.toggle('card__like-button_active');
   });
@@ -59,3 +101,6 @@ buttonLike.forEach(function(button) {
 
 // Listener for a sumbit event
 formElement.addEventListener('submit', formSubmitHandler);
+
+// Preload cards at photo-feed section from initialCards[]
+cardPreload();
