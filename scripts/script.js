@@ -8,8 +8,12 @@ const buttonAdd = document.querySelector('.head-profile__add-button');
 const buttonClose = document.querySelectorAll('.popup__close-button');
 
 // #Constants
-const formElement = document.querySelector('.popup__form');
+const formEditProfile = document.querySelector('.popup__form_type_profile-edit');
+const formAddCard = document.querySelector('.popup__form_type_card-add');
 const cardsContainer = document.querySelector('.photo-feed');
+const template = document.querySelector('#card-template').content;
+const cardTitleInput = document.querySelector('.popup__input_field_placename');
+const cardImageInput = document.querySelector('.popup__input_field_placeurl');
 // Cards at photo-feed
 const initialCards = [
   {
@@ -63,18 +67,43 @@ function formSubmitHandler(evt) {
   controlPopup(evt.target);
 }
 
-function cardsPreload() {
-  for (let i = 0; i < initialCards.length; i++) {
-    cardsContainer.insertAdjacentHTML('beforeend',
-      `<article class="card">
-      <img class="card__image" src="${initialCards[i].link}" alt="${initialCards[i].name}">
-      <div class="card__heading">
-        <h2 class="card__title">${initialCards[i].name}</h2>
-        <button class="card__like-button" type="button" aria-label="Нравится"></button>
-      </div>
-    </article>`);
-  };
+function formAddCardHandler(evt) {
+  evt.preventDefault();
+  cardPrepend(cardCreate(cardTitleInput.value, cardImageInput.value));
+  controlPopup(evt.target);
+}
+
+function cardCreate(name, link) {
+  // for (let i = 0; i < initialCards.length; i++) {
+  //   cardsContainer.insertAdjacentHTML('beforeend',
+  //     `<article class="card">
+  //     <img class="card__image" src="${initialCards[i].link}" alt="${initialCards[i].name}">
+  //     <div class="card__heading">
+  //       <h2 class="card__title">${initialCards[i].name}</h2>
+  //       <button class="card__like-button" type="button" aria-label="Нравится"></button>
+  //     </div>
+  //   </article>`);
+  // };
+  //// Второй вариант.
+  const newCard = template.querySelector('.card').cloneNode(true);
+  const cardImg = newCard.querySelector('.card__image');
+  const cardTitle = newCard.querySelector('.card__title');
+  const cardLikeButton = newCard.querySelector('.card__like-button');
+
+  cardImg.alt = name;
+  cardImg.src = link;
+  cardTitle.textContent = name;
+
+  cardLikeButton.addEventListener('click', function (evt) {
+    evt.target.classList.toggle('card__like-button_active');
+  });
+
+  return newCard;
 };
+
+function cardPrepend(card) {
+  cardsContainer.prepend(card);
+}
 
 // #Listeners
 // Listeners for form buttons
@@ -91,17 +120,23 @@ buttonClose.forEach(function (button) {
 });
 
 // Like button listener
-document.addEventListener('DOMContentLoaded', function () {
-  const buttonLike = document.querySelectorAll('.card__like-button');
-  buttonLike.forEach(function (button) {
-    button.addEventListener('click', () => {
-      button.classList.toggle('card__like-button_active');
-    });
-  });
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//   const buttonLike = document.querySelectorAll('.card__like-button');
+//   buttonLike.forEach(function (button) {
+//     button.addEventListener('click', () => {
+//       button.classList.toggle('card__like-button_active');
+//     });
+//   });
+// });
 
 // Listener for a sumbit event
-formElement.addEventListener('submit', formSubmitHandler);
+formEditProfile.addEventListener('submit', formSubmitHandler);
+formAddCard.addEventListener('submit', formAddCardHandler);
 
 // Preload cards at photo-feed section from initialCards[]
-cardsPreload();
+function cardsRender () {
+  const preload = initialCards.map(card => cardCreate(card.name, card.link));
+  cardsContainer.prepend(...preload);
+};
+
+cardsRender ();

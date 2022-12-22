@@ -22,7 +22,8 @@
         <div class="head-profile__userinfo">
           <div class="head-profile__username-and-edit">
             <h1 class="head-profile__username">Жак-Ив Кусто</h1>
-            <button class="head-profile__edit-button" type="button" aria-label="Редактировать имя и деятельность"></button>
+            <button class="head-profile__edit-button" type="button"
+              aria-label="Редактировать имя и деятельность"></button>
           </div>
           <p class="head-profile__job">Исследователь океана</p>
         </div>
@@ -87,8 +88,9 @@
 
   <div class="popup popup_edit">
     <div class="popup__content">
-      <button type="button" name="button_form_close" id="button_form_close" class="popup__close-button" aria-label="Закрыть форму редактирования"></button>
-      <form class="popup__form" name="formEditProfile">
+      <button type="button" name="button_form_close" id="button_form_close" class="popup__close-button"
+        aria-label="Закрыть форму редактирования"></button>
+      <form class="popup__form popup__form_type_profile-edit" name="formEditProfile">
         <h2 class="popup__title">Редактировать профиль</h2>
         <fieldset class="popup__input-container">
           <input class="popup__input popup__input_field_name" type="text" placeholder="Как Вас зовут?" name="username"
@@ -104,20 +106,31 @@
 
   <div class="popup popup_add">
     <div class="popup__content">
-      <button type="button" name="button_form_close" id="button_form_close" class="popup__close-button" aria-label="Закрыть форму редактирования"></button>
-      <form class="popup__form" name="formEditProfile">
+      <button type="button" name="button_form_close" id="button_form_close" class="popup__close-button"
+        aria-label="Закрыть форму редактирования"></button>
+      <form class="popup__form popup__form_type_card-add" name="formAddCard">
         <h2 class="popup__title">Добавить фото</h2>
         <fieldset class="popup__input-container">
           <input class="popup__input popup__input_field_placename" type="text" placeholder="Название" name="placename"
             id="placename">
-          <input class="popup__input popup__input_field_placeurl" type="text" placeholder="Ссылка на картинку" name="placeurl"
-            id="placeurl">
+          <input class="popup__input popup__input_field_placeurl" type="text" placeholder="Ссылка на картинку"
+            name="placeurl" id="placeurl">
         </fieldset>
         <button class="popup__add-button" name="button_placeForm_add" id="button_placeForm_add"
           type="submit">Создать</button>
       </form>
     </div>
   </div>
+
+  <template id="card-template">
+    <div class="card">
+      <img class="card__image">
+      <div class="card__heading">
+        <h2 class="card__title"></h2>
+        <button class="card__like-button" type="button" aria-label="Нравится"></button>
+      </div>
+    </div>
+  </template>
 
   <script src="./scripts/script.js"></script>
 </body>
