@@ -2,6 +2,7 @@
 // Popups
 const popupEdit = document.querySelector('.popup_edit');
 const popupAdd = document.querySelector('.popup_add');
+const popupPreview = document.querySelector('.popup_preview');
 // Buttons
 const buttonOpenEditForm = document.querySelector('.head-profile__edit-button');
 const buttonAdd = document.querySelector('.head-profile__add-button');
@@ -91,8 +92,17 @@ function cardCreate(name, link) {
   });
 
   // Listener for card delete button
-  cardDeleteButton.addEventListener('click', function (evt) {
+  cardDeleteButton.addEventListener('click', function () {
     newCard.remove();
+  });
+
+  cardImg.addEventListener('click', function () {
+    const popupPreviewImage = popupPreview.querySelector('.popup__image-preview');
+    const popupPreviewTitle = popupPreview.querySelector('.popup__title-preview');
+    popupPreviewImage.alt = name;
+    popupPreviewImage.src = link;
+    popupPreviewTitle.textContent = name;
+    controlPopup(popupPreview);
   });
 
   return newCard;

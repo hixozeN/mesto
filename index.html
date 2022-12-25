@@ -122,10 +122,20 @@
     </div>
   </div>
 
+  <div class="popup popup_preview">
+    <div class="popup__image-content">
+      <button type="button" name="button_form_close" id="button_form_close" class="popup__close-button"
+        aria-label="Закрыть превью"></button>
+      <img class="popup__image-preview">
+      <h2 class="popup__title-preview"></h2>
+    </div>
+  </div>
+
   <template id="card-template">
     <div class="card">
       <img class="card__image">
-      <button class="card__delete-button" name="button_card_delete" id="button_card_delete" type="button" aria-label="Удалить карточку"></button>
+      <button class="card__delete-button" name="button_card_delete" id="button_card_delete" type="button"
+        aria-label="Удалить карточку"></button>
       <div class="card__heading">
         <h2 class="card__title"></h2>
         <button class="card__like-button" type="button" aria-label="Нравится"></button>
