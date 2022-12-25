@@ -12,6 +12,13 @@
   transition: opacity 0.3s linear;
 }
 
+@-moz-document url-prefix() {
+  .head-profile__edit-button {
+    align-self: center;
+    margin-top: 8px;
+  }
+}
+
 .head-profile__edit-button:hover {
   opacity: 0.6;
 }
