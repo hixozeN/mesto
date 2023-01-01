@@ -67,20 +67,17 @@ function formSubmitHandler(evt) {
   controlPopup(evt.target);
 }
 
-// Function that handles the add form submission
-function formAddCardHandler(evt) {
-  evt.preventDefault();
-  cardPrepend(cardCreate(cardTitleInput.value, cardImageInput.value));
-  controlPopup(evt.target);
+function prependCard(card) {
+  cardsContainer.prepend(card);
 }
 
 // Function that creates new cards
-function cardCreate(name, link) {
-  const newCard = template.querySelector('.card').cloneNode(true); // choose div from template and clone it
-  const cardImg = newCard.querySelector('.card__image');
-  const cardTitle = newCard.querySelector('.card__title');
-  const cardLikeButton = newCard.querySelector('.card__like-button');
-  const cardDeleteButton = newCard.querySelector('.card__delete-button');
+function createCard(name, link) {
+  const newCards = template.querySelector('.card').cloneNode(true); // choose div from template and clone it
+  const cardImg = newCards.querySelector('.card__image');
+  const cardTitle = newCards.querySelector('.card__title');
+  const cardLikeButton = newCards.querySelector('.card__like-button');
+  const cardDeleteButton = newCards.querySelector('.card__delete-button');
 
   cardImg.alt = name; // Image's alt attribute will equal card's title
   cardImg.src = link;
@@ -93,7 +90,7 @@ function cardCreate(name, link) {
 
   // Listener for card delete button
   cardDeleteButton.addEventListener('click', function () {
-    newCard.remove();
+    newCards.remove();
   });
 
   cardImg.addEventListener('click', function () {
@@ -105,11 +102,14 @@ function cardCreate(name, link) {
     controlPopup(popupPreview);
   });
 
-  return newCard;
+  return newCards;
 };
 
-function cardPrepend(card) {
-  cardsContainer.prepend(card);
+// Function that handles the add form submission
+function formAddCardHandler(evt) {
+  evt.preventDefault();
+  prependCard(createCard(cardTitleInput.value, cardImageInput.value));
+  controlPopup(evt.target);
 }
 
 // #Listeners
@@ -137,9 +137,9 @@ formEditProfile.addEventListener('submit', formSubmitHandler);
 formAddCard.addEventListener('submit', formAddCardHandler);
 
 // Preload cards at photo-feed section from initialCards[]
-function cardsRender () {
-  const preload = initialCards.map(card => cardCreate(card.name, card.link));
+function renderCards() {
+  const preload = initialCards.map(card => createCard(card.name, card.link));
   cardsContainer.prepend(...preload);
 };
 
-cardsRender ();
+renderCards();
