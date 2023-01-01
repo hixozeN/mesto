@@ -6,15 +6,18 @@ const popupPreview = document.querySelector('.popup_preview');
 // Buttons
 const buttonOpenEditForm = document.querySelector('.head-profile__edit-button');
 const buttonAdd = document.querySelector('.head-profile__add-button');
-const buttonClose = document.querySelectorAll('.popup__close-button');
+const closeButtons = document.querySelectorAll('.popup__close-button');
 // Edit form for user profile (username & userjob)
 const formEditProfile = document.querySelector('.popup__form_type_profile-edit');
+// Consts for profile edit
+const nameInput = document.querySelector('.popup__input_field_name');
+const jobInput = document.querySelector('.popup__input_field_job');
+const userNameText = document.querySelector('.head-profile__username');
+const userJobText = document.querySelector('.head-profile__job');
 // Consts for adding and creating card
 const formAddCard = document.querySelector('.popup__form_type_card-add');
 const cardsContainer = document.querySelector('.photo-feed');
 const template = document.querySelector('#card-template').content;
-const cardTitleInput = document.querySelector('.popup__input_field_placename');
-const cardImageInput = document.querySelector('.popup__input_field_placeurl');
 // Cards at photo-feed (preload)
 const initialCards = [
   {
@@ -43,12 +46,6 @@ const initialCards = [
   }
 ];
 
-// #Global variables
-let nameInput = document.querySelector('.popup__input_field_name');
-let jobInput = document.querySelector('.popup__input_field_job');
-let userNameText = document.querySelector('.head-profile__username');
-let userJobText = document.querySelector('.head-profile__job');
-
 // #Functions
 /* This function will control the popups by toggle popup_opened class */
 function controlPopup(option) {
@@ -60,7 +57,7 @@ function controlPopup(option) {
 }
 
 // Function that handles the edit form submission
-function formSubmitHandler(evt) {
+function formEditProfileSubmitHandler(evt) {
   evt.preventDefault();
   userNameText.textContent = nameInput.value;
   userJobText.textContent = jobInput.value;
@@ -108,6 +105,8 @@ function createCard(name, link) {
 // Function that handles the add form submission
 function formAddCardHandler(evt) {
   evt.preventDefault();
+  const cardTitleInput = document.querySelector('.popup__input_field_placename');
+  const cardImageInput = document.querySelector('.popup__input_field_placeurl');
   prependCard(createCard(cardTitleInput.value, cardImageInput.value));
   controlPopup(evt.target);
 }
@@ -122,18 +121,17 @@ buttonOpenEditForm.addEventListener('click', () => {
 
 // Listener for add form button
 buttonAdd.addEventListener('click', () => {
-  cardTitleInput.value = "";
-  cardImageInput.value = "";
+  formAddCard.reset();
   controlPopup(popupAdd);
 });
 
 // Listener for each button which closes popup
-buttonClose.forEach(function (button) {
+closeButtons.forEach(function (button) {
   button.addEventListener('click', () => controlPopup(button));
 });
 
 // Listeners for a sumbit events
-formEditProfile.addEventListener('submit', formSubmitHandler);
+formEditProfile.addEventListener('submit', formEditProfileSubmitHandler);
 formAddCard.addEventListener('submit', formAddCardHandler);
 
 // Preload cards at photo-feed section from initialCards[]
