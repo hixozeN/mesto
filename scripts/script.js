@@ -47,13 +47,13 @@ const initialCards = [
 ];
 
 // #Functions
-/* This function will control the popups by toggle popup_opened class */
-function controlPopup(option) {
-  if (option.closest('.popup').classList.contains('popup_opened')) {
-    option.closest('.popup').classList.remove('popup_opened');
-  } else {
-    option.classList.add('popup_opened');
-  }
+// This function will open the popups by add popup_opened class
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+// This function will close the popups by remove popup_opened class
+function closePopup(popup) {
+  popup.closest('.popup').classList.remove('popup_opened');
 }
 
 // Function that handles the edit form submission
@@ -61,7 +61,7 @@ function formEditProfileSubmitHandler(evt) {
   evt.preventDefault();
   userNameText.textContent = nameInput.value;
   userJobText.textContent = jobInput.value;
-  controlPopup(evt.target);
+  closePopup(evt.target);
 }
 
 function prependCard(card) {
@@ -96,7 +96,7 @@ function createCard(name, link) {
     popupPreviewImage.alt = name;
     popupPreviewImage.src = link;
     popupPreviewTitle.textContent = name;
-    controlPopup(popupPreview);
+    openPopup(popupPreview);
   });
 
   return newCards;
@@ -108,13 +108,13 @@ function formAddCardHandler(evt) {
   const cardTitleInput = document.querySelector('.popup__input_field_placename');
   const cardImageInput = document.querySelector('.popup__input_field_placeurl');
   prependCard(createCard(cardTitleInput.value, cardImageInput.value));
-  controlPopup(evt.target);
+  closePopup(evt.target);
 }
 
 // #Listeners
 // Listener for edit form button
 buttonOpenEditForm.addEventListener('click', () => {
-  controlPopup(popupEdit);
+  openPopup(popupEdit);
   nameInput.value = userNameText.textContent;
   jobInput.value = userJobText.textContent;
 });
@@ -122,12 +122,12 @@ buttonOpenEditForm.addEventListener('click', () => {
 // Listener for add form button
 buttonAdd.addEventListener('click', () => {
   formAddCard.reset();
-  controlPopup(popupAdd);
+  openPopup(popupAdd);
 });
 
 // Listener for each button which closes popup
-closeButtons.forEach(function (button) {
-  button.addEventListener('click', () => controlPopup(button));
+closeButtons.forEach(function (popup) {
+  popup.addEventListener('click', () => closePopup(popup));
 });
 
 // Listeners for a sumbit events
