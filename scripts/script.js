@@ -50,10 +50,13 @@ const initialCards = [
 // This function will open the popups by add popup_opened class
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  popup.addEventListener('click', closeByOverlay);
+  document.addEventListener('keydown', closeByEscBtn);
 }
 // This function will close the popups by remove popup_opened class
 function closePopup(popup) {
   popup.closest('.popup').classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEscBtn);
 }
 
 // Function that handles the edit form submission
@@ -109,6 +112,22 @@ function formAddCardHandler(evt) {
   const cardImageInput = document.querySelector('.popup__input_field_placeurl');
   prependCard(createCard(cardTitleInput.value, cardImageInput.value));
   closePopup(evt.target);
+}
+
+// Function that closes the popups by click on popup's overlay
+function closeByOverlay (evt) {
+  if (evt.target.classList.contains('popup')) {
+    console.log('Overlay clicked');
+    closePopup(evt.target);
+  };
+}
+
+function closeByEscBtn (evt) {
+  if (evt.key === 'Escape') {
+    console.log('Escape pressed');
+    const popup = document.querySelectorAll('.popup');
+    popup.forEach(closePopup);
+  };
 }
 
 // #Listeners
