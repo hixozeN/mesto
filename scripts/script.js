@@ -118,14 +118,14 @@ function formAddCardHandler(evt) {
 }
 
 // Function that closes the popups by click on popup's overlay
-function closeByOverlay (evt) {
+function closeByOverlay(evt) {
   if (evt.target.classList.contains('popup')) {
     console.log('Overlay clicked');
     closePopup(evt.target);
   };
 }
 
-function closeByEscBtn (evt) {
+function closeByEscBtn(evt) {
   if (evt.key === 'Escape') {
     console.log('Escape pressed');
     const popup = document.querySelectorAll('.popup');
