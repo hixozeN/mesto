@@ -50,7 +50,10 @@ const initialCards = [
 // This function will open the popups by add popup_opened class
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  popup.addEventListener('click', closeByOverlay);
+  /* mousedown работает корректнее, чем click, т.к. при клике можно выделить инпут (чтобы выделить все, например),
+  курсор уйдет за область попапа на оверлей и попап закроется при mouseup */
+  popup.addEventListener('mousedown', closeByOverlay);
+  /* keydown предпочтительнее, потому что пользователь ожидает действия при нажатии, а не отпускании\задержке клавиши */
   document.addEventListener('keydown', closeByEscBtn);
 }
 // This function will close the popups by remove popup_opened class
