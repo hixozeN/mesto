@@ -128,8 +128,8 @@ function closeByOverlay(evt) {
 function closeByEscBtn(evt) {
   if (evt.key === 'Escape') {
     console.log('Escape pressed');
-    const popup = document.querySelectorAll('.popup');
-    popup.forEach(closePopup);
+    const activePopup = document.querySelector('.popup_opened');
+    closePopup(activePopup);
   };
 }
 
