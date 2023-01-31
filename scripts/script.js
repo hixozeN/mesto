@@ -59,6 +59,7 @@ function openPopup(popup) {
 // This function will close the popups by remove popup_opened class
 function closePopup(popup) {
   popup.closest('.popup').classList.remove('popup_opened');
+  popup.removeEventListener('mousedown', closeByOverlay);
   document.removeEventListener('keydown', closeByEscBtn);
 }
 
