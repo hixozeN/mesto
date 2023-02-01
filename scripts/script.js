@@ -17,8 +17,6 @@ const template = document.querySelector('#card-template').content;
 // Buttons
 const buttonOpenEditForm = document.querySelector('.head-profile__edit-button');
 const buttonAdd = document.querySelector('.head-profile__add-button');
-const buttonSubmitEditProfile = formEditProfile.querySelector('#button_editForm_save');
-const buttonSubmitAddCard = formAddCard.querySelector('#button_placeForm_add');
 const closeButtons = document.querySelectorAll('.popup__close-button');
 // Cards at photo-feed (preload)
 const initialCards = [
@@ -143,13 +141,13 @@ buttonOpenEditForm.addEventListener('click', () => {
   nameInput.value = userNameText.textContent;
   jobInput.value = userJobText.textContent;
   // that will activates submit button on 1st page loading and will resets validation errors in subsequent popup openings
-  resetValidation(formEditProfile, buttonSubmitEditProfile);
+  resetValidation(formEditProfile);
 });
 
 // Listener for add form button
 buttonAdd.addEventListener('click', () => {
   formAddCard.reset();
-  resetValidation(formAddCard, buttonSubmitAddCard); // reset form validation after form closing/submit
+  resetValidation(formAddCard); // reset form validation after form closing/submit
   openPopup(popupAdd);
 });
 

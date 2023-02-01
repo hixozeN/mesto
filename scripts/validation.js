@@ -80,9 +80,10 @@ const enableValidation = () => {
 };
 
 // Функция сброса формы валидации
-const resetValidation = (formElement, buttonElement) => {
+const resetValidation = (formElement) => {
+  const submitButton = formElement.querySelector(selectors.submitButtonSelector);
   getinputList(formElement).forEach(inputElement => hideInputError(formElement, inputElement));
-  setButtonState(getinputList(formElement), buttonElement);
+  setButtonState(getinputList(formElement), submitButton);
 };
 
 // Включаем валидацию
