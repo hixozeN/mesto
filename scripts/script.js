@@ -3,10 +3,6 @@
 const popupEdit = document.querySelector('.popup_edit');
 const popupAdd = document.querySelector('.popup_add');
 const popupPreview = document.querySelector('.popup_preview');
-// Buttons
-const buttonOpenEditForm = document.querySelector('.head-profile__edit-button');
-const buttonAdd = document.querySelector('.head-profile__add-button');
-const closeButtons = document.querySelectorAll('.popup__close-button');
 // Edit form for user profile (username & userjob)
 const formEditProfile = document.querySelector('.popup__form_type_profile-edit');
 // Consts for profile edit
@@ -18,6 +14,12 @@ const userJobText = document.querySelector('.head-profile__job');
 const formAddCard = document.querySelector('.popup__form_type_card-add');
 const cardsContainer = document.querySelector('.photo-feed');
 const template = document.querySelector('#card-template').content;
+// Buttons
+const buttonOpenEditForm = document.querySelector('.head-profile__edit-button');
+const buttonAdd = document.querySelector('.head-profile__add-button');
+const buttonSubmitEditProfile = formEditProfile.querySelector('#button_editForm_save');
+const buttonSubmitAddCard = formAddCard.querySelector('#button_placeForm_add');
+const closeButtons = document.querySelectorAll('.popup__close-button');
 // Cards at photo-feed (preload)
 const initialCards = [
   {
@@ -140,11 +142,14 @@ buttonOpenEditForm.addEventListener('click', () => {
   openPopup(popupEdit);
   nameInput.value = userNameText.textContent;
   jobInput.value = userJobText.textContent;
+  // that will activates submit button on 1st page loading and will resets validation errors in subsequent popup openings
+  resetValidation(formEditProfile, buttonSubmitEditProfile);
 });
 
 // Listener for add form button
 buttonAdd.addEventListener('click', () => {
   formAddCard.reset();
+  resetValidation(formAddCard, buttonSubmitAddCard); // reset form validation after form closing/submit
   openPopup(popupAdd);
 });
 
