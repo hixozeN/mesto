@@ -55,25 +55,29 @@ function openPopup(popup) {
   popup.addEventListener('mousedown', closeByOverlay);
   /* keydown предпочтительнее, потому что пользователь ожидает действия при нажатии, а не отпускании\задержке клавиши */
   document.addEventListener('keydown', closeByEscBtn);
-}
+};
 // This function will close the popups by remove popup_opened class
 function closePopup(popup) {
-  popup.closest('.popup').classList.remove('popup_opened');
+  popup.classList.remove('popup_opened');
   popup.removeEventListener('mousedown', closeByOverlay);
   document.removeEventListener('keydown', closeByEscBtn);
-}
+};
 
 // Function that handles the edit form submission
 function formEditProfileSubmitHandler(evt) {
   evt.preventDefault();
   userNameText.textContent = nameInput.value;
   userJobText.textContent = jobInput.value;
-  closePopup(evt.target);
-}
+  closePopup(popupEdit);
+};
 
 function prependCard(card) {
   cardsContainer.prepend(card);
-}
+};
+
+const likeButtonState = (button) => {
+    button.classList.toggle('card__like-button_active');
+};
 
 // Function that creates new cards
 function createCard(name, link) {
@@ -88,16 +92,14 @@ function createCard(name, link) {
   cardTitle.textContent = name;
 
   // Listener for card like button
-  cardLikeButton.addEventListener('click', function (evt) {
-    evt.target.classList.toggle('card__like-button_active');
-  });
+  cardLikeButton.addEventListener('click', () => likeButtonState(cardLikeButton));
 
   // Listener for card delete button
-  cardDeleteButton.addEventListener('click', function () {
+  cardDeleteButton.addEventListener('click', () => {
     newCards.remove();
   });
 
-  cardImg.addEventListener('click', function () {
+  cardImg.addEventListener('click',  () => {
     const popupPreviewImage = popupPreview.querySelector('.popup__image-preview');
     const popupPreviewTitle = popupPreview.querySelector('.popup__title-preview');
     popupPreviewImage.alt = name;
@@ -115,24 +117,24 @@ function formAddCardHandler(evt) {
   const cardTitleInput = document.querySelector('.popup__input_field_placename');
   const cardImageInput = document.querySelector('.popup__input_field_placeurl');
   prependCard(createCard(cardTitleInput.value, cardImageInput.value));
-  closePopup(evt.target);
-}
+  closePopup(popupAdd);
+};
 
 // Function that closes the popups by click on popup's overlay
-function closeByOverlay(evt) {
-  if (evt.target.classList.contains('popup')) {
+const closeByOverlay = (evt) => {
+  if (evt.target.classList.contains('popup_opened')) {
     console.log('Overlay clicked');
     closePopup(evt.target);
   };
-}
+};
 
-function closeByEscBtn(evt) {
+const closeByEscBtn = (evt) => {
   if (evt.key === 'Escape') {
     console.log('Escape pressed');
     const activePopup = document.querySelector('.popup_opened');
     closePopup(activePopup);
   };
-}
+};
 
 // #Listeners
 // Listener for edit form button
@@ -141,19 +143,22 @@ buttonOpenEditForm.addEventListener('click', () => {
   nameInput.value = userNameText.textContent;
   jobInput.value = userJobText.textContent;
   // that will activates submit button on 1st page loading and will resets validation errors in subsequent popup openings
-  resetValidation(formEditProfile);
+  resetValidation(formEditProfile, formValidationConfig);
 });
 
 // Listener for add form button
 buttonAdd.addEventListener('click', () => {
   formAddCard.reset();
-  resetValidation(formAddCard); // reset form validation after form closing/submit
+  resetValidation(formAddCard, formValidationConfig); // reset form validation after form closing/submit
   openPopup(popupAdd);
 });
 
 // Listener for each button which closes popup
-closeButtons.forEach(function (popup) {
-  popup.addEventListener('click', () => closePopup(popup));
+closeButtons.forEach( (button) => {
+  button.addEventListener('click', () => {
+    const activePopup = document.querySelector('.popup_opened')
+    closePopup(activePopup);
+  });
 });
 
 // Listeners for a sumbit events
