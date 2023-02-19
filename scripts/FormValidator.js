@@ -51,7 +51,7 @@ class FormValidator {
   }
 
   _setButtonState() {
-    if(this._hasInvalidInput()) {
+    if (this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._inactiveButtonClass);
       this._buttonElement.disabled = true;
     } else {

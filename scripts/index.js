@@ -75,7 +75,7 @@ function formAddCardHandler(evt) {
   evt.preventDefault();
   const cardTitleInput = document.querySelector('.popup__input_field_placename');
   const cardImageInput = document.querySelector('.popup__input_field_placeurl');
-  cardsContainer.prepend(createCard({name: cardTitleInput.value, link: cardImageInput.value}));
+  cardsContainer.prepend(createCard({ name: cardTitleInput.value, link: cardImageInput.value }));
   closePopup(popupAdd);
 };
 
@@ -96,7 +96,7 @@ buttonAdd.addEventListener('click', () => {
 });
 
 // Слушатель для каждой кнопки закрытия попапа
-closeButtons.forEach( (button) => {
+closeButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const activePopup = document.querySelector('.popup_opened')
     closePopup(activePopup);
