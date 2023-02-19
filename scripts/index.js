@@ -19,6 +19,8 @@ const formAddCard = document.querySelector('.popup__form_type_card-add');
 const cardsContainer = document.querySelector('.photo-feed');
 const popupPreviewImage = popupPreview.querySelector('.popup__image-preview');
 const popupPreviewTitle = popupPreview.querySelector('.popup__title-preview');
+const cardTitleInput = document.querySelector('.popup__input_field_placename');
+const cardImageInput = document.querySelector('.popup__input_field_placeurl');
 // Buttons
 const buttonOpenEditForm = document.querySelector('.head-profile__edit-button');
 const buttonAdd = document.querySelector('.head-profile__add-button');
@@ -73,8 +75,6 @@ function formEditProfileSubmitHandler(evt) {
 
 function formAddCardHandler(evt) {
   evt.preventDefault();
-  const cardTitleInput = document.querySelector('.popup__input_field_placename');
-  const cardImageInput = document.querySelector('.popup__input_field_placeurl');
   cardsContainer.prepend(createCard({ name: cardTitleInput.value, link: cardImageInput.value }));
   closePopup(popupAdd);
 };
@@ -116,9 +116,7 @@ formAddCard.addEventListener('submit', formAddCardHandler);
 // Рендер карточек (preload)
 function renderCards(items) {
   items.forEach(item => {
-    const card = new Card(item.name, item.link, '#card-template', openPopupPreview);
-    const cardElement = card.createCard();
-    cardsContainer.append(cardElement);
+    cardsContainer.append(createCard({name: item.name, link: item.link}));
   });
 };
 
