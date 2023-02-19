@@ -47,14 +47,12 @@ function closePopup(popup) {
 
 const closeByOverlay = (evt) => {
   if (evt.target.classList.contains('popup_opened')) {
-    console.log('Overlay clicked');
     closePopup(evt.target);
   };
 };
 
 const closeByEscBtn = (evt) => {
   if (evt.key === 'Escape') {
-    console.log('Escape pressed');
     const activePopup = document.querySelector('.popup_opened');
     closePopup(activePopup);
   };
