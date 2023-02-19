@@ -1,3 +1,7 @@
+import { initialCards, formValidationConfig } from "./config.js";
+import FormValidator from "./FormValidator.js";
+import Card from "./Card.js";
+
 // #Constants
 // Popups
 const popupEdit = document.querySelector('.popup_edit');
@@ -13,114 +17,34 @@ const userJobText = document.querySelector('.head-profile__job');
 // Consts for adding and creating card
 const formAddCard = document.querySelector('.popup__form_type_card-add');
 const cardsContainer = document.querySelector('.photo-feed');
-const template = document.querySelector('#card-template').content;
+const popupPreviewImage = popupPreview.querySelector('.popup__image-preview');
+const popupPreviewTitle = popupPreview.querySelector('.popup__title-preview');
 // Buttons
 const buttonOpenEditForm = document.querySelector('.head-profile__edit-button');
 const buttonAdd = document.querySelector('.head-profile__add-button');
 const closeButtons = document.querySelectorAll('.popup__close-button');
-// Cards at photo-feed (preload)
-const initialCards = [
-  {
-    name: 'Рабочее место',
-    link: './images/card1.jpg'
-  },
-  {
-    name: 'Рефакторинг',
-    link: './images/card2.jpg'
-  },
-  {
-    name: 'Праздник к нам приходит',
-    link: './images/card3.jpg'
-  },
-  {
-    name: 'Прокрастинация',
-    link: './images/card4.jpg'
-  },
-  {
-    name: 'Ночной дожор',
-    link: './images/card5.jpg'
-  },
-  {
-    name: 'Вечерняя прогулка',
-    link: './images/card6.jpg'
-  }
-];
 
 // #Functions
 // This function will open the popups by add popup_opened class
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  /* mousedown работает корректнее, чем click, т.к. при клике можно выделить инпут (чтобы выделить все, например),
-  курсор уйдет за область попапа на оверлей и попап закроется при mouseup */
   popup.addEventListener('mousedown', closeByOverlay);
-  /* keydown предпочтительнее, потому что пользователь ожидает действия при нажатии, а не отпускании\задержке клавиши */
   document.addEventListener('keydown', closeByEscBtn);
 };
-// This function will close the popups by remove popup_opened class
+
+function openPopupPreview(name, link) {
+  popupPreviewImage.src = link;
+  popupPreviewImage.alt = name;
+  popupPreviewTitle.textContent = name;
+  openPopup(popupPreview);
+}
+
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   popup.removeEventListener('mousedown', closeByOverlay);
   document.removeEventListener('keydown', closeByEscBtn);
 };
 
-// Function that handles the edit form submission
-function formEditProfileSubmitHandler(evt) {
-  evt.preventDefault();
-  userNameText.textContent = nameInput.value;
-  userJobText.textContent = jobInput.value;
-  closePopup(popupEdit);
-};
-
-function prependCard(card) {
-  cardsContainer.prepend(card);
-};
-
-const likeButtonState = (button) => {
-    button.classList.toggle('card__like-button_active');
-};
-
-// Function that creates new cards
-function createCard(name, link) {
-  const newCards = template.querySelector('.card').cloneNode(true); // choose div from template and clone it
-  const cardImg = newCards.querySelector('.card__image');
-  const cardTitle = newCards.querySelector('.card__title');
-  const cardLikeButton = newCards.querySelector('.card__like-button');
-  const cardDeleteButton = newCards.querySelector('.card__delete-button');
-
-  cardImg.alt = name; // Image's alt attribute will equal card's title
-  cardImg.src = link;
-  cardTitle.textContent = name;
-
-  // Listener for card like button
-  cardLikeButton.addEventListener('click', () => likeButtonState(cardLikeButton));
-
-  // Listener for card delete button
-  cardDeleteButton.addEventListener('click', () => {
-    newCards.remove();
-  });
-
-  cardImg.addEventListener('click',  () => {
-    const popupPreviewImage = popupPreview.querySelector('.popup__image-preview');
-    const popupPreviewTitle = popupPreview.querySelector('.popup__title-preview');
-    popupPreviewImage.alt = name;
-    popupPreviewImage.src = link;
-    popupPreviewTitle.textContent = name;
-    openPopup(popupPreview);
-  });
-
-  return newCards;
-};
-
-// Function that handles the add form submission
-function formAddCardHandler(evt) {
-  evt.preventDefault();
-  const cardTitleInput = document.querySelector('.popup__input_field_placename');
-  const cardImageInput = document.querySelector('.popup__input_field_placeurl');
-  prependCard(createCard(cardTitleInput.value, cardImageInput.value));
-  closePopup(popupAdd);
-};
-
-// Function that closes the popups by click on popup's overlay
 const closeByOverlay = (evt) => {
   if (evt.target.classList.contains('popup_opened')) {
     console.log('Overlay clicked');
@@ -136,24 +60,44 @@ const closeByEscBtn = (evt) => {
   };
 };
 
+function createCard(item) {
+  const card = new Card(item.name, item.link, '#card-template', openPopupPreview);
+  const cardElement = card.createCard();
+  return cardElement;
+}
+
+function formEditProfileSubmitHandler(evt) {
+  evt.preventDefault();
+  userNameText.textContent = nameInput.value;
+  userJobText.textContent = jobInput.value;
+  closePopup(popupEdit);
+};
+
+function formAddCardHandler(evt) {
+  evt.preventDefault();
+  const cardTitleInput = document.querySelector('.popup__input_field_placename');
+  const cardImageInput = document.querySelector('.popup__input_field_placeurl');
+  cardsContainer.prepend(createCard({name: cardTitleInput.value, link: cardImageInput.value}));
+  closePopup(popupAdd);
+};
+
 // #Listeners
-// Listener for edit form button
+// Слушатель кнопки открытия попапа с формой редактирования профиля
 buttonOpenEditForm.addEventListener('click', () => {
   openPopup(popupEdit);
   nameInput.value = userNameText.textContent;
   jobInput.value = userJobText.textContent;
-  // that will activates submit button on 1st page loading and will resets validation errors in subsequent popup openings
-  resetValidation(formEditProfile, formValidationConfig);
+  formEditValidation.resetValidation(formEditProfile, formValidationConfig); // сброс валидации при сабмите или переоткрытии
 });
 
-// Listener for add form button
+// Слушатель кнопки открытия попапа с формой добавления фото
 buttonAdd.addEventListener('click', () => {
   formAddCard.reset();
-  resetValidation(formAddCard, formValidationConfig); // reset form validation after form closing/submit
+  formAddCardValidation.resetValidation(formAddCard, formValidationConfig); // сброс валидации при сабмите или переоткрытии
   openPopup(popupAdd);
 });
 
-// Listener for each button which closes popup
+// Слушатель для каждой кнопки закрытия попапа
 closeButtons.forEach( (button) => {
   button.addEventListener('click', () => {
     const activePopup = document.querySelector('.popup_opened')
@@ -161,14 +105,23 @@ closeButtons.forEach( (button) => {
   });
 });
 
-// Listeners for a sumbit events
+// Включение валидации каждой формы
+const formEditValidation = new FormValidator(formValidationConfig, formEditProfile);
+formEditValidation.enableValidation();
+const formAddCardValidation = new FormValidator(formValidationConfig, formAddCard);
+formAddCardValidation.enableValidation();
+
+// Слушатели форм на событие отправки
 formEditProfile.addEventListener('submit', formEditProfileSubmitHandler);
 formAddCard.addEventListener('submit', formAddCardHandler);
 
-// Preload cards at photo-feed section from initialCards[]
-function renderCards() {
-  const preload = initialCards.map(card => createCard(card.name, card.link));
-  cardsContainer.prepend(...preload);
+// Рендер карточек (preload)
+function renderCards(items) {
+  items.forEach(item => {
+    const card = new Card(item.name, item.link, '#card-template', openPopupPreview);
+    const cardElement = card.createCard();
+    cardsContainer.append(cardElement);
+  });
 };
 
-renderCards();
+renderCards(initialCards);

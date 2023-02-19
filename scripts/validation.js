@@ -1,11 +1,13 @@
-const formValidationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit-button',
-  inactiveButtonClass: 'popup__submit-button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-};
+import { formValidationConfig } from "./config.js";
+
+// const formValidationConfig = {
+//   formSelector: '.popup__form',
+//   inputSelector: '.popup__input',
+//   submitButtonSelector: '.popup__submit-button',
+//   inactiveButtonClass: 'popup__submit-button_inactive',
+//   inputErrorClass: 'popup__input_type_error',
+//   errorClass: 'popup__input-error_active'
+// };
 
 // Функция, выбирающая span по id инпута, куда передадим ошибку
 const getErrorElement = (formElement, inputElement) => formElement.querySelector(`.${inputElement.id}-error`);
@@ -88,3 +90,5 @@ const resetValidation = (formElement, config) => {
 
 // Включаем валидацию
 enableValidation(formValidationConfig);
+
+export default resetValidation;
