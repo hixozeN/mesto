@@ -13,8 +13,10 @@
   transition: opacity 0.3s linear;
 }
 
-.head-profile__add-button:hover {
-  opacity: 0.6;
+@media (pointer: fine) {
+  .head-profile__add-button:hover {
+    opacity: 0.6;
+  }
 }
 
 @media screen and (max-width: 917px) {

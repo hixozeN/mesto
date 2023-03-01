@@ -12,6 +12,8 @@
   padding: 0;
 }
 
-.card__like-button:hover {
-  opacity: 0.5;
+@media (pointer: fine) {
+  .card__like-button:hover {
+    opacity: 0.5;
+  }
 }
