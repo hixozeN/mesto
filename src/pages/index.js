@@ -1,6 +1,10 @@
-import { initialCards, formValidationConfig } from "./config.js";
-import FormValidator from "./FormValidator.js";
-import Card from "./Card.js";
+import { initialCards, formValidationConfig } from "../utils/config.js";
+import FormValidator from "../components/FormValidator.js";
+import Card from "../components/Card.js";
+import Popup from "../components/Popup.js";
+import '../pages/index.css'
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
 
 // #Constants
 // Popups
@@ -38,7 +42,8 @@ function openPopupPreview(name, link) {
   popupPreviewImage.src = link;
   popupPreviewImage.alt = name;
   popupPreviewTitle.textContent = name;
-  openPopup(popupPreview);
+  const zoomImage = new PopupWithImage('.popup_preview');
+  zoomImage.open(name, link);
 }
 
 function closePopup(popup) {
@@ -81,8 +86,10 @@ function formAddCardHandler(evt) {
 
 // #Listeners
 // Слушатель кнопки открытия попапа с формой редактирования профиля
+const popupEditForm = new Popup('.popup_edit');
 buttonOpenEditForm.addEventListener('click', () => {
-  openPopup(popupEdit);
+  // openPopup(popupEdit);
+  popupEditForm.open()
   nameInput.value = userNameText.textContent;
   jobInput.value = userJobText.textContent;
   formEditValidation.resetValidation(formEditProfile, formValidationConfig); // сброс валидации при сабмите или переоткрытии
@@ -96,12 +103,13 @@ buttonAdd.addEventListener('click', () => {
 });
 
 // Слушатель для каждой кнопки закрытия попапа
-closeButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const activePopup = document.querySelector('.popup_opened')
-    closePopup(activePopup);
-  });
-});
+popupEditForm.setEventListeners()
+// closeButtons.forEach((button) => {
+//   button.addEventListener('click', () => {
+//     const activePopup = document.querySelector('.popup_opened')
+//     closePopup(activePopup);
+//   });
+// });
 
 // Включение валидации каждой формы
 const formEditValidation = new FormValidator(formValidationConfig, formEditProfile);
@@ -114,10 +122,11 @@ formEditProfile.addEventListener('submit', formEditProfileSubmitHandler);
 formAddCard.addEventListener('submit', formAddCardHandler);
 
 // Рендер карточек (preload)
-function renderCards(items) {
-  items.forEach(item => {
-    cardsContainer.append(createCard({name: item.name, link: item.link}));
-  });
-};
+const renderCards = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    renderCards.addItem(createCard({name: item.name, link: item.link}));
+  }
+}, cardsContainer);
 
-renderCards(initialCards);
+renderCards.renderItems();

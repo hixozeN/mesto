@@ -1,27 +1,34 @@
+import cardOneImage from '../images/card1.jpg';
+import cardTwoImage from '../images/card2.jpg';
+import cardThreeImage from '../images/card3.jpg';
+import cardFourImage from '../images/card4.jpg';
+import cardFiveImage from '../images/card5.jpg';
+import cardSixImage from '../images/card6.jpg';
+
 const initialCards = [
   {
     name: 'Рабочее место',
-    link: './images/card1.jpg'
+    link: cardOneImage
   },
   {
     name: 'Рефакторинг',
-    link: './images/card2.jpg'
+    link: cardTwoImage
   },
   {
     name: 'Праздник к нам приходит',
-    link: './images/card3.jpg'
+    link: cardThreeImage
   },
   {
     name: 'Прокрастинация',
-    link: './images/card4.jpg'
+    link: cardFourImage
   },
   {
     name: 'Ночной дожор',
-    link: './images/card5.jpg'
+    link: cardFiveImage
   },
   {
     name: 'Вечерняя прогулка',
-    link: './images/card6.jpg'
+    link: cardSixImage
   }
 ];
 
