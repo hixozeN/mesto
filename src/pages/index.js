@@ -1,132 +1,112 @@
 import { initialCards, formValidationConfig } from "../utils/config.js";
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
-import Popup from "../components/Popup.js";
 import '../pages/index.css'
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
+import {
+  formEditProfile, formAddCard,                                                       // Формы редактирования профиля и добавления карточки
+  cardsContainer,                                                                     // Контейнер с контентной частью - photo-feed
+  buttonOpenEditForm, buttonOpenAddForm,                                              // Кнопки для открытия попапов с формами
+  userNameText, userJobText                                                           // DOM-элементы с именем и деятельностью пользователя
+} from '../utils/constants.js'
 
-// #Constants
-// Popups
-const popupEdit = document.querySelector('.popup_edit');
-const popupAdd = document.querySelector('.popup_add');
-const popupPreview = document.querySelector('.popup_preview');
-// Edit form for user profile (username & userjob)
-const formEditProfile = document.querySelector('.popup__form_type_profile-edit');
-// Consts for profile edit
-const nameInput = document.querySelector('.popup__input_field_name');
-const jobInput = document.querySelector('.popup__input_field_job');
-const userNameText = document.querySelector('.head-profile__username');
-const userJobText = document.querySelector('.head-profile__job');
-// Consts for adding and creating card
-const formAddCard = document.querySelector('.popup__form_type_card-add');
-const cardsContainer = document.querySelector('.photo-feed');
-const popupPreviewImage = popupPreview.querySelector('.popup__image-preview');
-const popupPreviewTitle = popupPreview.querySelector('.popup__title-preview');
-const cardTitleInput = document.querySelector('.popup__input_field_placename');
-const cardImageInput = document.querySelector('.popup__input_field_placeurl');
-// Buttons
-const buttonOpenEditForm = document.querySelector('.head-profile__edit-button');
-const buttonAdd = document.querySelector('.head-profile__add-button');
-const closeButtons = document.querySelectorAll('.popup__close-button');
-
-// #Functions
-// This function will open the popups by add popup_opened class
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-  popup.addEventListener('mousedown', closeByOverlay);
-  document.addEventListener('keydown', closeByEscBtn);
+function handleCardClick(name, link) {                                                // Функция открытия попапа с полноразмерным изображением и данными из карточки
+  imageFullsize.open(name, link);
 };
 
-function openPopupPreview(name, link) {
-  popupPreviewImage.src = link;
-  popupPreviewImage.alt = name;
-  popupPreviewTitle.textContent = name;
-  const zoomImage = new PopupWithImage('.popup_preview');
-  zoomImage.open(name, link);
-}
-
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  popup.removeEventListener('mousedown', closeByOverlay);
-  document.removeEventListener('keydown', closeByEscBtn);
+function createCard(item) {                                                           // Функция создания новой карточки
+  const card = new Card(item.name, item.link, '#card-template', handleCardClick);
+  return card.createCard();
 };
 
-const closeByOverlay = (evt) => {
-  if (evt.target.classList.contains('popup_opened')) {
-    closePopup(evt.target);
-  };
-};
+/*
+  Экземпляр класса UserInfo с профилем пользователя
+  Методы:
+    .getUserInfo() - получить данные из DOM-элементов с именем и деятельностью пользователя
+    .setUserInfo(values) - изменить данные пользователя в DOM из формы редактирования
+    .fillFormValues() - подгрузить в значения инпутов текущие данные пользователя
+*/
+const userProfile = new UserInfo({
+  username: userNameText,
+  userjob: userJobText
+});
 
-const closeByEscBtn = (evt) => {
-  if (evt.key === 'Escape') {
-    const activePopup = document.querySelector('.popup_opened');
-    closePopup(activePopup);
-  };
-};
+/*
+  Экземпляр класса PopupWithImage с попапом полноразмерной картинки
+  Методы:
+    .open(название_картинки, ссылка_на_картинку) - открыть попап и заполняет данные о картинке из аргументов
+    .close() - закрыть попап
+    .setEventListeners() - установить слушатели, позволяющие закрыть попап
+*/
+const imageFullsize = new PopupWithImage('.popup_preview');
 
-function createCard(item) {
-  const card = new Card(item.name, item.link, '#card-template', openPopupPreview);
-  const cardElement = card.createCard();
-  return cardElement;
-}
+/*
+  Экземпляр класса PopupWithForm с попапом и формой редактирования,
+  коллбэк 'callbackSubmitForm' описывает функционал изменения данных пользователя в секции head-profile
+  Методы:
+    .open(), .close(), .setEventListeners()
+*/
+const popupWithEditForm = new PopupWithForm('.popup_edit', {
+  callbackSubmitForm: (values) => {
+    userProfile.setUserInfo(values);
+    popupWithEditForm.close();
+  }
+});
 
-function formEditProfileSubmitHandler(evt) {
-  evt.preventDefault();
-  userNameText.textContent = nameInput.value;
-  userJobText.textContent = jobInput.value;
-  closePopup(popupEdit);
-};
+/*
+  Экземпляр класса PopupWithForm с попапом и формой добавления карточек,
+  коллбэк 'callbackSubmitForm' описывает функционал добавления карточки в контейнер 'photo-feed'
+  Методы:
+    .open(), .close(), .setEventListeners()
+*/
+const popupWithAddForm = new PopupWithForm('.popup_add', {
+  callbackSubmitForm: (values) => {
+    cardsContainer.prepend(createCard({ name: values.placename, link: values.placeurl }));
+    popupWithAddForm.close();
+  }
+});
 
-function formAddCardHandler(evt) {
-  evt.preventDefault();
-  cardsContainer.prepend(createCard({ name: cardTitleInput.value, link: cardImageInput.value }));
-  closePopup(popupAdd);
-};
+/*
+  Декларирует валидаторы форм из класса FormValidator
+  Методы:
+    .enableValidation() - включить валидацию формы
+    .resetValidation() - сбросить валидирование формы
+        (чистит ошибки, контролирует состояние сабмит-кнопки после переоткрытия формы или после её отправки)
+*/
+const formEditValidation = new FormValidator(formValidationConfig, formEditProfile);
+const formAddCardValidation = new FormValidator(formValidationConfig, formAddCard);
 
-// #Listeners
+// Включает валидацию форм
+formEditValidation.enableValidation();
+formAddCardValidation.enableValidation();
+
+// #Слушатели
 // Слушатель кнопки открытия попапа с формой редактирования профиля
-const popupEditForm = new Popup('.popup_edit');
 buttonOpenEditForm.addEventListener('click', () => {
-  // openPopup(popupEdit);
-  popupEditForm.open()
-  nameInput.value = userNameText.textContent;
-  jobInput.value = userJobText.textContent;
-  formEditValidation.resetValidation(formEditProfile, formValidationConfig); // сброс валидации при сабмите или переоткрытии
+  popupWithEditForm.open()
+  userProfile.fillFormValues();                                              // Заполнение значений инпутов формы редактирования текущими данными пользователя
+  formEditValidation.resetValidation(formEditProfile, formValidationConfig); // Сброс валидации при сабмите или переоткрытии
 });
 
 // Слушатель кнопки открытия попапа с формой добавления фото
-buttonAdd.addEventListener('click', () => {
-  formAddCard.reset();
-  formAddCardValidation.resetValidation(formAddCard, formValidationConfig); // сброс валидации при сабмите или переоткрытии
-  openPopup(popupAdd);
+buttonOpenAddForm.addEventListener('click', () => {
+  formAddCardValidation.resetValidation(formAddCard, formValidationConfig); // Сброс валидации при сабмите или переоткрытии
+  popupWithAddForm.open();
 });
 
-// Слушатель для каждой кнопки закрытия попапа
-popupEditForm.setEventListeners()
-// closeButtons.forEach((button) => {
-//   button.addEventListener('click', () => {
-//     const activePopup = document.querySelector('.popup_opened')
-//     closePopup(activePopup);
-//   });
-// });
+// Слушатели для каждого попапа
+popupWithEditForm.setEventListeners();
+popupWithAddForm.setEventListeners();
+imageFullsize.setEventListeners();
 
-// Включение валидации каждой формы
-const formEditValidation = new FormValidator(formValidationConfig, formEditProfile);
-formEditValidation.enableValidation();
-const formAddCardValidation = new FormValidator(formValidationConfig, formAddCard);
-formAddCardValidation.enableValidation();
-
-// Слушатели форм на событие отправки
-formEditProfile.addEventListener('submit', formEditProfileSubmitHandler);
-formAddCard.addEventListener('submit', formAddCardHandler);
-
-// Рендер карточек (preload)
+// Рендер созданных карточек с помощью класса Section
 const renderCards = new Section({
   items: initialCards,
   renderer: (item) => {
-    renderCards.addItem(createCard({name: item.name, link: item.link}));
+    renderCards.addItem(createCard({ name: item.name, link: item.link }));
   }
 }, cardsContainer);
-
 renderCards.renderItems();

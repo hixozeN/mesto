@@ -10,6 +10,7 @@ class Section {
   }
 
   renderItems() {
+    this._container.innerHTML = '';                                 // чистим контейнер перед рендером элементов
     this._renderedItems.forEach(item => this._renderer(item));
   }
 }
