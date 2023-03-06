@@ -14,6 +14,10 @@ class PopupWithForm extends Popup {
     return this._formValues;
   }
 
+  setInputValues(profileData) {
+    this._inputList.forEach((input) => input.value = profileData[input.name]);
+  }
+
   setEventListeners() {
     super.setEventListeners();
     this._formElement.addEventListener('submit', (evt) => {
