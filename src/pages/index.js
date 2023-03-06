@@ -87,12 +87,12 @@ formAddCardValidation.enableValidation();
 buttonOpenEditForm.addEventListener('click', () => {
   popupWithEditForm.open()
   userProfile.getUserInfo();                                                 // Заполнение значений инпутов формы редактирования текущими данными пользователя
-  formEditValidation.resetValidation(formEditProfile, formValidationConfig); // Сброс валидации при сабмите или переоткрытии
+  formEditValidation.resetValidation(); // Сброс валидации при сабмите или переоткрытии
 });
 
 // Слушатель кнопки открытия попапа с формой добавления фото
 buttonOpenAddForm.addEventListener('click', () => {
-  formAddCardValidation.resetValidation(formAddCard, formValidationConfig); // Сброс валидации при сабмите или переоткрытии
+  formAddCardValidation.resetValidation(); // Сброс валидации при сабмите или переоткрытии
   popupWithAddForm.open();
 });
 
