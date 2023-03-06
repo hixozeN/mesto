@@ -25,9 +25,8 @@ function createCard(item) {                                                     
 /*
   Экземпляр класса UserInfo с профилем пользователя
   Методы:
-    .getUserInfo() - получить данные из DOM-элементов с именем и деятельностью пользователя
+    .getUserInfo() - подгрузить в значения инпутов текущие данные пользователя
     .setUserInfo(values) - изменить данные пользователя в DOM из формы редактирования
-    .fillFormValues() - подгрузить в значения инпутов текущие данные пользователя
 */
 const userProfile = new UserInfo({
   username: userNameText,
@@ -87,7 +86,7 @@ formAddCardValidation.enableValidation();
 // Слушатель кнопки открытия попапа с формой редактирования профиля
 buttonOpenEditForm.addEventListener('click', () => {
   popupWithEditForm.open()
-  userProfile.fillFormValues();                                              // Заполнение значений инпутов формы редактирования текущими данными пользователя
+  userProfile.getUserInfo();                                                 // Заполнение значений инпутов формы редактирования текущими данными пользователя
   formEditValidation.resetValidation(formEditProfile, formValidationConfig); // Сброс валидации при сабмите или переоткрытии
 });
 

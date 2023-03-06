@@ -8,22 +8,13 @@ class UserInfo {
   }
 
   getUserInfo() {
-    this._profileData = {
-      username: this._username.textContent,
-      userjob: this._userjob.textContent
-    }
-    return this._profileData;
+    this._inputUserName.value = this._username.textContent;
+    this._inputUserJob.value = this._userjob.textContent;
   }
 
   setUserInfo(values) {
     this._username.textContent = values.username;
     this._userjob.textContent = values.userjob;
-  }
-
-  fillFormValues() {
-    this.getUserInfo();
-    this._inputUserName.value = this._profileData.username;
-    this._inputUserJob.value = this._profileData.userjob;
   }
 }
 
