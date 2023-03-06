@@ -107,5 +107,5 @@ const renderCards = new Section({
   renderer: (item) => {
     renderCards.addItem(createCard({ name: item.name, link: item.link }));
   }
-}, cardsContainer);
+}, '.photo-feed');
 renderCards.renderItems();
