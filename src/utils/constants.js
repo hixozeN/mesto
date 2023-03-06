@@ -9,10 +9,14 @@ const buttonOpenAddForm = document.querySelector('.head-profile__add-button');  
 // Элементы секции профиля пользователя
 const userNameText = document.querySelector('.head-profile__username');                     // Элемент с именем пользователя
 const userJobText = document.querySelector('.head-profile__job');                           // Элемент с деятельностью пользователя
+// Инпуты формы редактирования
+const inputUserName = formEditProfile.querySelector('.popup__input_field_name');            // Инпут с именем пользователя формы редактирования
+const inputUserJob = formEditProfile.querySelector('.popup__input_field_job');              // Инпут с деятельностью пользователя формы редактирования
 
 export {
   formEditProfile, formAddCard,
   cardsContainer,
   buttonOpenEditForm, buttonOpenAddForm,
-  userNameText, userJobText
+  userNameText, userJobText,
+  inputUserName, inputUserJob
 };

@@ -10,7 +10,8 @@ import {
   formEditProfile, formAddCard,                                                       // Формы редактирования профиля и добавления карточки
   cardsContainer,                                                                     // Контейнер с контентной частью - photo-feed
   buttonOpenEditForm, buttonOpenAddForm,                                              // Кнопки для открытия попапов с формами
-  userNameText, userJobText                                                           // DOM-элементы с именем и деятельностью пользователя
+  userNameText, userJobText,                                                          // DOM-элементы с именем и деятельностью пользователя
+  inputUserName, inputUserJob                                                         // Инпуты формы редактирования
 } from '../utils/constants.js'
 
 function handleCardClick(name, link) {                                                // Функция открытия попапа с полноразмерным изображением и данными из карточки
@@ -86,7 +87,9 @@ formAddCardValidation.enableValidation();
 // Слушатель кнопки открытия попапа с формой редактирования профиля
 buttonOpenEditForm.addEventListener('click', () => {
   popupWithEditForm.open()
-  userProfile.getUserInfo();                                                 // Заполнение значений инпутов формы редактирования текущими данными пользователя
+  const userData = userProfile.getUserInfo();
+  inputUserName.value = userData.username;
+  inputUserJob.value = userData.userjob;
   formEditValidation.resetValidation(); // Сброс валидации при сабмите или переоткрытии
 });
 
