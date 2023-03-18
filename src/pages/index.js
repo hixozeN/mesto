@@ -1,4 +1,5 @@
 import { initialCards, formValidationConfig } from "../utils/config.js";
+import { apiConfig } from "../utils/apiConfig.js";
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
 import '../pages/index.css'
@@ -6,7 +7,15 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js";
 import { buttonOpenEditForm, buttonOpenAddForm } from '../utils/constants.js'
+
+const api = new Api(apiConfig);
+const getter = () => {
+  api.getInitialCards()
+  .then(res => console.log(res))
+}
+getter()
 
 function handleCardClick(name, link) {                                                // Функция открытия попапа с полноразмерным изображением и данными из карточки
   imageFullsize.open(name, link);
