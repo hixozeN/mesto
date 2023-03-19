@@ -68,6 +68,7 @@ class Api {
   putCardLike(cardId) {
     return fetch(`${this._link}/cards/likes/${cardId}`, {
       headers: this._headers,
+      method: 'PUT'
     })
       .then(res => this._checkResponse(res))
   };
@@ -75,6 +76,7 @@ class Api {
   deleteCardLike(cardId) {
     return fetch(`${this._link}/cards/likes/${cardId}`, {
       headers: this._headers,
+      method: 'DELETE'
     })
       .then(res => this._checkResponse(res))
   };

@@ -11,28 +11,49 @@ import Api from "../components/Api.js";
 import { buttonOpenEditForm, buttonOpenAddForm } from '../utils/constants.js'
 
 const api = new Api(apiConfig);
-const getter = () => {
-  api.getInitialCards()
-  .then(res => console.log(res))
-}
-getter()
+let currentUserId;
 
-function handleCardClick(name, link) {                                                // Функция открытия попапа с полноразмерным изображением и данными из карточки
-  imageFullsize.open(name, link);
-};
+// Начало тестов
 
-function createCard(item) {                                                           // Функция создания новой карточки
-  const card = new Card(item.name, item.link, '#card-template', handleCardClick);
+// Конец тестов
+
+function createCard(cardData) {                                                           // Функция создания новой карточки
+  const card = new Card(cardData, currentUserId, '#card-template', {
+    handleCardClick: (name, link) => imageFullsize.open(name, link),
+    handleCardDelete: () => {},
+    handleCardLike: (cardId) => {
+      api.putCardLike(cardId)
+        .then(res => {
+          console.log(res.likes)
+          card.countCardLikes(res);
+        })
+    },
+    handleCardDislike: (cardId) => {
+      api.deleteCardLike(cardId)
+        .then(res => {
+          console.log(res);
+          card.countCardLikes(res);
+        })
+    }
+  });
   return card.createCard();
 };
 
-// Рендер созданных карточек с помощью класса Section
+// Экзмемпляр класса Section
 const cardsSection = new Section({
   renderer: (item) => {
-    cardsSection.addItem(createCard({ name: item.name, link: item.link }));
+    cardsSection.addItem(createCard(item));
   }
 }, '.photo-feed');
-cardsSection.renderItems(initialCards);
+
+// Первоначальный рендер данных пользователя и карточек
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cardList]) => {
+    currentUserId = userData._id;
+    userProfile.setUserInfo({username: userData.name, userjob: userData.about});
+    cardsSection.renderItems(cardList);
+  })
+  .catch((err) => console.log('Ошибка при первоначальном рендере: ', err))
 
 /*
   Экземпляр класса UserInfo с профилем пользователя
@@ -75,8 +96,14 @@ const popupWithEditForm = new PopupWithForm('.popup_edit', {
 */
 const popupWithAddForm = new PopupWithForm('.popup_add', {
   callbackSubmitForm: (values) => {
-    cardsSection.addItem(createCard({ name: values.placename, link: values.placeurl }));
-    popupWithAddForm.close();
+    console.log(values)
+    api.createCard({name: values.placename, link: values.placeurl})
+      .then((cardData) => {
+        cardsSection.addItem(createCard(cardData));
+        console.log(cardData)
+        popupWithAddForm.close();
+      })
+      .catch(err => console.log(err))
   }
 });
 
