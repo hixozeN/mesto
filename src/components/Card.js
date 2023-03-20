@@ -1,16 +1,12 @@
 class Card {
   constructor(cardData, currentUserId, cardTemplate, handlers) {
-    /*
-      Приходит объект cardData, но разбивка по нейм и линк идет.
-      Нужно избавиться от name & link.
-    */
     this._cardData = cardData;
     this._name = this._cardData.name;
     this._link = this._cardData.link;
     this._cardTemplate = cardTemplate;
     this._currentUserId = currentUserId;
-    this._cardId = cardData._id;
-    this._authorId = cardData.owner._id;
+    this._cardId = this._cardData._id;
+    this._authorId = this._cardData.owner._id;
     this._handleCardClick = handlers.handleCardClick;
     this._handleCardLike = handlers.handleCardLike;
     this._handleCardDislike = handlers.handleCardDislike;
@@ -29,19 +25,25 @@ class Card {
     // Image Zoomer
     this._cardImage.addEventListener('click', () => this._handleCardClick(this._name, this._link));
   }
-
+  // Проверка на лайк карточки от текущего пользователя
   _isCardLiked() {
     return this.likesArray.find(user => this._currentUserId === user._id);
   }
-
+  // Подсчет и отрисовка лайков
   countCardLikes(data) {
       this.likesArray = data.likes;
-      this._likesCounter.textContent = this.likesArray.length;
-      if (this._isCardLiked()) {
-        this._cardLikeButton.classList.add('card__like-button_active')
-      } else {
-        this._cardLikeButton.classList.remove('card__like-button_active')
+      // Защита от переполнения счетчика лайков
+      this.likeCount = this.likesArray.length;
+      this.suffix = '';
+      if (this.likesArray.length >= 1000) {
+        this.likeCount = parseFloat((this.likesArray.length/1000).toFixed(1));
+        this.suffix = 'K';
       }
+      this._likesCounter.textContent = this.likeCount + this.suffix;
+
+      this._isCardLiked()
+        ? this._cardLikeButton.classList.add('card__like-button_active')
+        : this._cardLikeButton.classList.remove('card__like-button_active')
   }
 
   _setLikeButtonState() {
