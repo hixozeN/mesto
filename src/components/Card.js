@@ -14,15 +14,15 @@ class Card {
     this._handleCardClick = handlers.handleCardClick;
     this._handleCardLike = handlers.handleCardLike;
     this._handleCardDislike = handlers.handleCardDislike;
+    this._handleCardDelete = handlers.handleCardDelete;
   }
 
   _setEventListeners() {
-    console.log(`${this._cardId} - ${this._authorId} - ${this._currentUserId}`)
     // Likes
     this._cardLikeButton.addEventListener('click', () => this._setLikeButtonState());
     // Delete button
     if (this._currentUserId === this._authorId) {
-      this._cardDeleteButton.addEventListener('click', () => this._deleteCard());
+      this._cardDeleteButton.addEventListener('click', () => this._handleCardDelete(this._cardId, this));
     } else {
       this._cardDeleteButton.remove();
     };
@@ -52,7 +52,7 @@ class Card {
     }
   }
 
-  _deleteCard() {
+  deleteCard() {
     this._element.remove();
     this._element = null;
   }

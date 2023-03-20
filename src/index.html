@@ -60,6 +60,23 @@
     </div>
   </div>
 
+  <div class="popup popup_edit-avatar">
+    <div class="popup__content">
+      <button type="button" name="button_form_close" id="button_form-edit_close" class="popup__close-button"
+        aria-label="Закрыть форму"></button>
+      <form class="popup__form popup__form_type_profile-edit" name="formEditProfile" novalidate>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <fieldset class="popup__input-container">
+          <input class="popup__input popup__input_field_ava-url" type="text" placeholder="Ссылка на аватар" name="avaurl"
+            id="avaurl" minlength="2" maxlength="40" required>
+          <span class="popup__input-error avaurl-error"></span>
+        </fieldset>
+        <button class="popup__submit-button" name="buttonAvatarSubmit" id="buttonAvatarSubmit"
+          type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
   <div class="popup popup_add">
     <div class="popup__content">
       <button type="button" name="button_form_close" id="button_form-add_close" class="popup__close-button"
@@ -93,7 +110,7 @@
     <div class="popup__content">
       <button type="button" name="button_form_close" id="button_form-add_close" class="popup__close-button"
         aria-label="Закрыть окно подтверждения"></button>
-      <h1 class="popup__title">Вы уверен?</h1>
+      <h1 class="popup__title">Вы уверены?</h1>
       <button class="popup__submit-button" name="button_delete-card" id="button_delete-card"
           type="submit">Да</button>
     </div>

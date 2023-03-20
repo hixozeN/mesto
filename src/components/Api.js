@@ -19,7 +19,7 @@ class Api {
   };
 
   setUserInfo({name, about}) {
-    return fetch(`${this._link}/`, {
+    return fetch(`${this._link}/users/me `, {
       headers: this._headers,
       method: 'PATCH',
       body: JSON.stringify({
@@ -66,7 +66,7 @@ class Api {
   };
 
   putCardLike(cardId) {
-    return fetch(`${this._link}/cards/likes/${cardId}`, {
+    return fetch(`${this._link}/cards/${cardId}/likes`, {
       headers: this._headers,
       method: 'PUT'
     })
@@ -74,7 +74,7 @@ class Api {
   };
 
   deleteCardLike(cardId) {
-    return fetch(`${this._link}/cards/likes/${cardId}`, {
+    return fetch(`${this._link}/cards/${cardId}/likes`, {
       headers: this._headers,
       method: 'DELETE'
     })

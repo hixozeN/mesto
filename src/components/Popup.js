@@ -1,7 +1,7 @@
 class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
-    this._closeButton = this._popup.querySelector('.popup__close-button');
+    this._submitButton = this._popup.querySelector('.popup__submit-button');
   }
 
   open() {
@@ -26,6 +26,14 @@ class Popup {
     if (evt.key === 'Escape') {
       this.close();
     };
+  }
+
+  proccessActionButtonText(text) {
+    this._submitButton.innerHTML = `${text}<span class="dot-1">.</span><span class="dot-2">.</span><span class="dot-3">.</span>`;
+  }
+
+  finalActionButtonText(text) {
+    this._submitButton.innerHTML = text;
   }
 }
 

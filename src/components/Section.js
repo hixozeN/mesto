@@ -9,7 +9,6 @@ class Section {
   }
 
   renderItems(items) {
-    this._container.innerHTML = '';                                         // чистим контейнер перед рендером элементов
     items.reverse().forEach(item => this._renderer(item));
   }
 }
