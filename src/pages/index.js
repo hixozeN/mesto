@@ -1,4 +1,4 @@
-import { initialCards, formValidationConfig } from "../utils/config.js";
+import { formValidationConfig } from "../utils/config.js";
 import { apiConfig } from "../utils/apiConfig.js";
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
@@ -13,10 +13,6 @@ import { buttonOpenEditForm, buttonOpenAddForm, buttonOpenAvatarForm } from '../
 
 const api = new Api(apiConfig);
 let currentUserId;
-
-// Начало тестов
-
-// Конец тестов
 
 function createCard(cardData) {
   const card = new Card(cardData, currentUserId, '#card-template', {
@@ -42,6 +38,12 @@ const cardsSection = new Section({
   }
 }, '.photo-feed');
 
+const userProfile = new UserInfo({
+  username: '.head-profile__username',
+  userjob: '.head-profile__job',
+  avatar: '.head-profile__avatar'
+});
+
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cardList]) => {
     currentUserId = userData._id;
@@ -54,12 +56,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     userProfile.setUserInfo({username: 'Жак-Ив Кусто', userjob: 'Исследователь океанов'});
     document.querySelector('.photo-feed').innerHTML = `<p style='text-align: center'>Что-то пошло не так :(</p>`
   })
-
-const userProfile = new UserInfo({
-  username: '.head-profile__username',
-  userjob: '.head-profile__job',
-  avatar: '.head-profile__avatar'
-});
 
 const imageFullsize = new PopupWithImage('.popup_preview');
 
@@ -89,7 +85,6 @@ const popupWithEditForm = new PopupWithForm('.popup_edit', {
       })
       .catch(err => console.log('Ошибка: ', err))
       .finally(() => popupWithEditForm.finalActionButtonText('Сохранить'))
-    
   }
 });
 
