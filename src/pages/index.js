@@ -9,7 +9,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js"
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
-import { buttonOpenEditForm, buttonOpenAddForm } from '../utils/constants.js'
+import { buttonOpenEditForm, buttonOpenAddForm, buttonOpenAvatarForm } from '../utils/constants.js'
 
 const api = new Api(apiConfig);
 let currentUserId;
@@ -45,7 +45,8 @@ const cardsSection = new Section({
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cardList]) => {
     currentUserId = userData._id;
-    userProfile.setUserInfo({username: userData.name, userjob: userData.about, avatar: userData.avatar});
+    userProfile.setUserInfo({username: userData.name, userjob: userData.about});
+    userProfile.setUserAvatar(userData.avatar)
     cardsSection.renderItems(cardList);
   })
   .catch((err) => {
@@ -94,14 +95,16 @@ const popupWithEditForm = new PopupWithForm('.popup_edit', {
 
 const popupEditAvatar = new PopupWithForm('.popup_edit-avatar', {
   callbackSubmitForm: (value) => {
-    popupWithEditForm.proccessActionButtonText('Сохранение');
+    popupEditAvatar.proccessActionButtonText('Сохранение');
     api.setUserAvatar({
       avatar: value.avaurl
     })
       .then((res) => {
-        document.querySelector('.head-profile__avatar').src = res.avatar;
+        userProfile.setUserAvatar(res.avatar)
         popupEditAvatar.close();
       })
+      .catch()
+      .finally(() => popupEditAvatar.finalActionButtonText('Сохранить'))
   }
 });
 
@@ -134,7 +137,7 @@ buttonOpenEditForm.addEventListener('click', () => {
 });
 
 // Слушать кнопки открытия попапа с формой редактирования аватара
-document.querySelector('.head-profile__edit-avatar-button').addEventListener('click', () => {
+buttonOpenAvatarForm.addEventListener('click', () => {
   formEditAvatarValidation.resetValidation();
   popupEditAvatar.open();
 });

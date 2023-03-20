@@ -15,7 +15,10 @@ class UserInfo {
   setUserInfo(values) {
     this._username.textContent = values.username;
     this._userjob.textContent = values.userjob;
-    this._avatar.src = values.avatar;
+  }
+
+  setUserAvatar(url) {
+    this._avatar.src = url;
   }
 }
 
