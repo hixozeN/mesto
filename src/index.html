@@ -18,7 +18,10 @@
 
     <section class="head-profile">
       <div class="head-profile__user-section">
-        <img class="head-profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватар пользователя">
+        <div class="head-profile__avatar-section">
+          <img class="head-profile__avatar" src="" alt="Аватар пользователя">
+          <button class="head-profile__edit-avatar-button" type="button" aria-label="Редактировать аватар"></button>
+        </div>
         <div class="head-profile__userinfo">
           <div class="head-profile__username-and-edit">
             <h1 class="head-profile__username"></h1>
@@ -64,11 +67,11 @@
     <div class="popup__content">
       <button type="button" name="button_form_close" id="button_form-edit_close" class="popup__close-button"
         aria-label="Закрыть форму"></button>
-      <form class="popup__form popup__form_type_profile-edit" name="formEditProfile" novalidate>
+      <form class="popup__form popup__form_type_avatar-edit" name="formEditAvatar" novalidate>
         <h2 class="popup__title">Обновить аватар</h2>
         <fieldset class="popup__input-container">
-          <input class="popup__input popup__input_field_ava-url" type="text" placeholder="Ссылка на аватар" name="avaurl"
-            id="avaurl" minlength="2" maxlength="40" required>
+          <input class="popup__input popup__input_field_ava-url" type="url" placeholder="Ссылка на аватар" name="avaurl"
+            id="avaurl" required>
           <span class="popup__input-error avaurl-error"></span>
         </fieldset>
         <button class="popup__submit-button" name="buttonAvatarSubmit" id="buttonAvatarSubmit"

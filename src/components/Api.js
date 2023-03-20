@@ -29,11 +29,11 @@ class Api {
       .then(res => this._checkResponse(res))
   };
 
-  setUserAvatar(avatar) {
+  setUserAvatar({avatar}) {
     return fetch(`${this._link}/users/me/avatar`, {
       headers: this._headers,
       method: 'PATCH',
-      body: JSON.stringify(avatar)
+      body: JSON.stringify({avatar})
     })
       .then(res => this._checkResponse(res))
   };

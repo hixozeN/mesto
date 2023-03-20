@@ -2,6 +2,7 @@ class UserInfo {
   constructor(profileElements) {
     this._username = document.querySelector(profileElements.username);
     this._userjob = document.querySelector(profileElements.userjob);
+    this._avatar = document.querySelector(profileElements.avatar);
   }
 
   getUserInfo() {
@@ -14,6 +15,7 @@ class UserInfo {
   setUserInfo(values) {
     this._username.textContent = values.username;
     this._userjob.textContent = values.userjob;
+    this._avatar.src = values.avatar;
   }
 }
 

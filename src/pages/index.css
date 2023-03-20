@@ -16,7 +16,9 @@
 @import url(../blocks/head-profile/head-profile.css);
 @import url(../blocks/head-profile/__user-section/head-profile__user-section.css);
 @import url(../blocks/head-profile/__username-and-edit/head-profile__username-and-edit.css);
+@import url(../blocks/head-profile/__avatar-section/head-profile__avatar-section.css);
 @import url(../blocks/head-profile/__avatar/head-profile__avatar.css);
+@import url(../blocks/head-profile/__edit-avatar-button/head-profile__edit-avatar-button.css);
 @import url(../blocks/head-profile/__edit-button/head-profile__edit-button.css);
 @import url(../blocks/head-profile/__job/head-profile__job.css);
 @import url(../blocks/head-profile/__userinfo/head-profile__userinfo.css);

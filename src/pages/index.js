@@ -45,7 +45,7 @@ const cardsSection = new Section({
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cardList]) => {
     currentUserId = userData._id;
-    userProfile.setUserInfo({username: userData.name, userjob: userData.about});
+    userProfile.setUserInfo({username: userData.name, userjob: userData.about, avatar: userData.avatar});
     cardsSection.renderItems(cardList);
   })
   .catch((err) => {
@@ -56,7 +56,8 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
 const userProfile = new UserInfo({
   username: '.head-profile__username',
-  userjob: '.head-profile__job'
+  userjob: '.head-profile__job',
+  avatar: '.head-profile__avatar'
 });
 
 const imageFullsize = new PopupWithImage('.popup_preview');
@@ -91,6 +92,19 @@ const popupWithEditForm = new PopupWithForm('.popup_edit', {
   }
 });
 
+const popupEditAvatar = new PopupWithForm('.popup_edit-avatar', {
+  callbackSubmitForm: (value) => {
+    popupWithEditForm.proccessActionButtonText('Сохранение');
+    api.setUserAvatar({
+      avatar: value.avaurl
+    })
+      .then((res) => {
+        document.querySelector('.head-profile__avatar').src = res.avatar;
+        popupEditAvatar.close();
+      })
+  }
+});
+
 const popupWithAddForm = new PopupWithForm('.popup_add', {
   callbackSubmitForm: (values) => {
     popupWithAddForm.proccessActionButtonText('Создание');
@@ -106,8 +120,10 @@ const popupWithAddForm = new PopupWithForm('.popup_add', {
 
 const formEditValidation = new FormValidator(formValidationConfig, '.popup__form_type_profile-edit');
 const formAddCardValidation = new FormValidator(formValidationConfig, '.popup__form_type_card-add');
+const formEditAvatarValidation = new FormValidator(formValidationConfig, '.popup__form_type_avatar-edit');
 formEditValidation.enableValidation();
 formAddCardValidation.enableValidation();
+formEditAvatarValidation.enableValidation();
 
 // #Слушатели
 // Слушатель кнопки открытия попапа с формой редактирования профиля
@@ -115,6 +131,12 @@ buttonOpenEditForm.addEventListener('click', () => {
   popupWithEditForm.open()
   popupWithEditForm.setInputValues(userProfile.getUserInfo()); // Заполнение значений инпутов данными с актуальной информацией
   formEditValidation.resetValidation(); // Сброс валидации при сабмите или переоткрытии
+});
+
+// Слушать кнопки открытия попапа с формой редактирования аватара
+document.querySelector('.head-profile__edit-avatar-button').addEventListener('click', () => {
+  formEditAvatarValidation.resetValidation();
+  popupEditAvatar.open();
 });
 
 // Слушатель кнопки открытия попапа с формой добавления фото
@@ -128,3 +150,4 @@ popupWithEditForm.setEventListeners();
 popupWithAddForm.setEventListeners();
 imageFullsize.setEventListeners();
 popupWithConfirmation.setEventListeners();
+popupEditAvatar.setEventListeners();
