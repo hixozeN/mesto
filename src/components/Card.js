@@ -30,7 +30,7 @@ class Card {
     return this.likesArray.find(user => this._currentUserId === user._id);
   }
   // Подсчет и отрисовка лайков
-  countCardLikes(data) {
+  renderCardLikes(data) {
       this.likesArray = data.likes;
       // Защита от переполнения счетчика лайков
       this.likeCount = this.likesArray.length;
@@ -80,7 +80,7 @@ class Card {
     this._cardImage.alt = this._name;
     this._cardTitle.textContent = this._name;
 
-    this.countCardLikes(this._cardData);
+    this.renderCardLikes(this._cardData);
     this._setEventListeners();
     return this._element;
   }

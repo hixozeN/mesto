@@ -20,12 +20,12 @@ function createCard(cardData) {
     handleCardDelete: (cardId, cardElement) => popupWithConfirmation.open(cardId, cardElement),
     handleCardLike: (cardId) => {
       api.putCardLike(cardId)
-        .then(res => card.countCardLikes(res))
+        .then(res => card.renderCardLikes(res))
         .catch(err => console.log('Ошибка при лайке: ', err))
     },
     handleCardDislike: (cardId) => {
-      api.deleteCardLike(cardId)
-        .then(res => card.countCardLikes(res))
+      api.deleteCardLike(cardId)                                                                                                                                                                                    
+        .then(res => card.renderCardLikes(res))
         .catch(err => console.log('Ошибка при дизлайке: ', err))
     }
   });
